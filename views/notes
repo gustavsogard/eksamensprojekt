@@ -1,0 +1,4 @@
+Her vil de forskellige HTML sider være.
+Nederst på siderne er et stykke JavaScript, som fetcher relevant data fra API'en
+og tilføjer det til de korresponderende elementer i HTML'en.
+Kan opdeles i partials (head, header, footer) og pages.

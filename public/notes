@@ -1,0 +1,2 @@
+Her vil alle statiske filer være, herunder stylesheets, scripts og billeder.
+Indsæt scripts i HTML filerne for at hente og indsætte relevant data på den statiske side (fx. det nuværende tidspunkt).
