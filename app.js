@@ -23,5 +23,5 @@ const root = require('./routes/root.route');
 app.use('/', root);
 
 app.listen(port, () => {
-    console.log(`Running on port ${port}`);
+    console.log(`Running on port: ${port}`);
 });
