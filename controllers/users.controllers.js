@@ -1,8 +1,8 @@
-const database = require('../models/User.js');
+const Users = require('../models/User.js');
 
-const logIn = async (req, res) => {
+exports.logIn = async (req, res) => {
     const { email, password } = req.body;
-    const user = await database.getUser(email);
+    const user = await Users.getUser(email);
 
     if (email === '' || password === '') {
         res.render('../views/pages/login.ejs', {error: 'All fields are required'});
@@ -22,10 +22,10 @@ const logIn = async (req, res) => {
     res.redirect('/');
 }
 
-const createUser = async (req, res) => {
+exports.createUser = async (req, res) => {
     try {
         const { first_name, last_name, email, password, confirm } = req.body;
-        const checkUser = await database.getUser(email);
+        const checkUser = await Users.getUser(email);
 
         if (first_name === '' || last_name === '' || email === '' || password === '' || confirm === '') {
             res.render('../views/pages/register.ejs', {error: 'All fields are required'});
@@ -45,17 +45,17 @@ const createUser = async (req, res) => {
             return;
         }
 
-        database.createUser(first_name, last_name, email, password);
+        Users.createUser(first_name, last_name, email, password);
         res.redirect('/login');
     } catch (error) {
         res.render('../views/pages/register.ejs', {error: error});
     }
 }
 
-const updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
     try {
         const { first_name, last_name, email, password, confirm } = req.body;
-        const checkUser = await database.getUser(email);
+        const checkUser = await Users.getUser(email);
 
         if (first_name === '' || last_name === '' || email === '' || password === '' || confirm === '') {
             res.render('../views/pages/account.ejs', {error: 'All fields are required'});
@@ -75,15 +75,9 @@ const updateUser = async (req, res) => {
             return;
         }
 
-        database.updateUser(first_name, last_name, email, password);
+        Users.updateUser(first_name, last_name, email, password);
         res.redirect('/account');
     } catch (error) {
         res.render('../views/pages/account.ejs', {error: error});
     }
 }
-
-module.exports = {
-    logIn,
-    createUser,
-    updateUser
-};
