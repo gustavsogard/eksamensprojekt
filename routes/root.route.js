@@ -3,16 +3,12 @@ const router = express.Router();
 const usersController = require('../controllers/users.controllers');
 
 router.get('/', (req, res) => {
-    res.render('../views/pages/index.ejs', { title: '' });
+    res.render('../views/pages/index.ejs');
 });
 
 router.route('/register')
     .get((req, res) => {
-        if (req.session.loggedin) {
-            res.redirect('/');
-            return;
-        }
-        res.render('../views/pages/register.ejs', {error: ''});
+        usersController.renderRegister(req, res);
     })
     .post((req, res) => {
         usersController.createUser(req, res);
@@ -20,28 +16,19 @@ router.route('/register')
 
 router.route('/login')
     .get((req, res) => {
-        if (req.session.loggedin) {
-            res.redirect('/');
-            return;
-        }
-        res.render('../views/pages/login.ejs', {error: ''});
+        usersController.renderLogIn(req, res);
     })
     .post((req, res) => {
         usersController.logIn(req, res);
     });
 
 router.get('/logout', (req, res) => {
-    req.session.destroy();
-    res.redirect('/');
+    usersController.logOut(req, res);
 });
 
 router.route('/account')
     .get((req, res) => {
-        if (!req.session.loggedin) {
-            res.redirect('/login');
-            return;
-        }
-        res.render('../views/pages/account.ejs', { error: '' });
+        usersController.renderAccount(req, res);
     })
     .post((req, res) => {
         usersController.updateUser(req, res);
