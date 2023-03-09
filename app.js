@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 
-const port = 5000;
+const port = 4000;
 
 app.set('view engine', 'ejs');
 app.use('/public', express.static('public'));
