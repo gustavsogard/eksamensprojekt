@@ -69,6 +69,17 @@ exports.updateUser = async (req, res) => {
     }
 }
 
+exports.deleteUser = async (req, res) => {
+    if (!req.session.loggedin) {
+        res.redirect('/login');
+        return;
+    }
+
+    await Users('delete', {email: req.session.user.email});
+    req.session.destroy();
+    res.redirect('/register');
+}
+
 exports.logOut = (req, res) => {
     req.session.destroy();
     res.redirect('/');
