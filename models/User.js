@@ -43,6 +43,12 @@ function Users(operation, obj) {
                             email: TYPES.VarChar
                         };
                         break;
+                    case 'delete':
+                        query = 'DELETE FROM users WHERE email = @email';
+                        parameters = {
+                            email: TYPES.VarChar
+                        };
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));
