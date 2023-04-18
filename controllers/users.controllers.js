@@ -11,7 +11,7 @@ exports.renderLogIn = (req, res) => {
 
 exports.logIn = async (req, res) => {
     const reqUser = req.body;
-    const dbUser = await Users.getUser(reqUser.email);
+    const dbUser = await Users('get', {email: reqUser.email});
     const validate = validateLogIn(reqUser, dbUser);
 
     if (validate !== true) {
@@ -34,14 +34,14 @@ exports.renderRegister = (req, res) => {
 
 exports.createUser = async (req, res) => {
     const reqUser = req.body;
-    const dbUser = await Users.getUser(reqUser.email);
+    const dbUser = await Users('get', {email: reqUser.email});
     const validate = validateCreate(reqUser, dbUser);
 
     if (validate !== true) {
         res.render('../views/pages/register.ejs', {error: validate});
         return;
     } else {
-        Users.createUser(reqUser.first_name, reqUser.last_name, reqUser.email, reqUser.password);
+        Users('create', {first_name: reqUser.first_name, last_name: reqUser.last_name, email: reqUser.email, password: reqUser.password});
         res.redirect('/login');
     }
 }
@@ -56,14 +56,15 @@ exports.renderAccount = (req, res) => {
 
 exports.updateUser = async (req, res) => {
     const reqUser = req.body;
-    const dbUser = await Users.getUser(reqUser.email);
+    const dbUser = await Users('get', {email: reqUser.email});
     const validate = validateUpdate(reqUser, dbUser, req.session.user.email);
 
     if (validate !== true) {
         res.render('../views/pages/account.ejs', {error: validate});
         return;
     } else {
-        Users.updateUser(reqUser.first_name, reqUser.last_name, reqUser.email, reqUser.password);
+        await Users('update', {first_name: reqUser.first_name, last_name: reqUser.last_name, email: reqUser.email, password: reqUser.password});
+        req.session.user = await Users('get', {email: reqUser.email});
         res.redirect('/account');
     }
 }
