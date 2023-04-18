@@ -24,6 +24,7 @@ function Articles(operation, obj) {
                         parameters = {
                             id: TYPES.Int
                         };
+                        
                         break;
                     default:
                         console.log('No operation specified');
@@ -54,8 +55,9 @@ function Articles(operation, obj) {
                         article[column.metadata.colName] = column.value;
                     })
                     response.push(article)
+                    console.log(response);
                 });
-
+                
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
                     resolve(response);

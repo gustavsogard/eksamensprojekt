@@ -6,7 +6,7 @@ const articlesController = require('../controllers/articles.controllers');
 
 router.route('/articles/:id')
     .get((req, res) => {
-  
+      console.log("tjek");
       articlesController.renderArticle(req,res);
     })
     .post((req,res) => {
