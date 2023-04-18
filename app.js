@@ -22,6 +22,10 @@ app.use(function(req, res, next) {
 const root = require('./routes/root.route');
 app.use('/', root);
 
+const articles = require('./routes/articles.route');
+app.use('/', articles);
+
+
 app.listen(port, () => {
     console.log(`Running on port: ${port}`);
 });
