@@ -23,7 +23,7 @@ connection.on('connect', (err) => {
         console.log(err);
         reject(err);
     } else {
-        let query = 'SELECT TOP 10 * FROM sales.orders';
+        let query = 'SELECT TOP 10 * FROM sales.orders order by customer_id';
 
         const request = new Request(query, (err) => {
             if (err) {
