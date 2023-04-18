@@ -6,8 +6,8 @@ const config = {
         type: 'default',
         options: {
             userName: 'gustav',
-            password: 'xxxxxxxxxxxx'
-        }
+            password: 'KrMksas6dpiCo5F9'
+        } 
     },
     options: {
         encrypt: true,
