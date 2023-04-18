@@ -32,6 +32,11 @@ router.route('/account')
     })
     .post((req, res) => {
         usersController.updateUser(req, res);
+    })
+
+router.route('/account/delete')
+    .get((req, res) => {
+        usersController.deleteUser(req, res);
     });
 
 module.exports = router;
