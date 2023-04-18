@@ -15,7 +15,7 @@ const config = {
         database: 'CBS'
     }
 };
-
+ 
 const connection = new Connection(config);
 
 connection.on('connect', (err) => {
