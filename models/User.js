@@ -3,7 +3,7 @@ const config = require('../config');
 
 function Users(operation, obj) {
     const connection = new Connection(config);
-
+ 
     return new Promise((resolve, reject) => {
         connection.on('connect', (err) => {
             if (err) {
