@@ -41,7 +41,7 @@ exports.createUser = async (req, res) => {
         res.render('../views/pages/register.ejs', {error: validate});
         return;
     } else {
-        Users('create', {first_name: reqUser.first_name, last_name: reqUser.last_name, email: reqUser.email, password: reqUser.password});
+        Users('create', {name: reqUser.name, email: reqUser.email, password: reqUser.password});
         res.redirect('/login');
     }
 }
@@ -63,7 +63,7 @@ exports.updateUser = async (req, res) => {
         res.render('../views/pages/account.ejs', {error: validate});
         return;
     } else {
-        await Users('update', {first_name: reqUser.first_name, last_name: reqUser.last_name, email: reqUser.email, password: reqUser.password});
+        await Users('update', {name: reqUser.name, email: reqUser.email, password: reqUser.password});
         req.session.user = await Users('get', {email: reqUser.email});
         res.redirect('/account');
     }

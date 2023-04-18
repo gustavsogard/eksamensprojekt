@@ -20,19 +20,17 @@ function Users(operation, obj) {
                 // Set up the SQL query and parameters based on the specified operation
                 switch (operation) {
                     case 'create':
-                        query = 'INSERT INTO users (first_name, last_name, email, password) VALUES (@first_name, @last_name, @email, @password)';
+                        query = 'INSERT INTO users (name, email, password) VALUES (@name, @email, @password)';
                         parameters = {
-                            first_name: TYPES.VarChar,
-                            last_name: TYPES.VarChar,
+                            name: TYPES.VarChar,
                             email: TYPES.VarChar,
                             password: TYPES.VarChar
                         };
                         break;
                     case 'update':
-                        query = 'UPDATE users SET first_name = @first_name, last_name = @last_name, email = @email, password = @password WHERE email = @email';
+                        query = 'UPDATE users SET name = @name, email = @email, password = @password WHERE email = @email';
                         parameters = {
-                            first_name: TYPES.VarChar,
-                            last_name: TYPES.VarChar,
+                            name: TYPES.VarChar,
                             email: TYPES.VarChar,
                             password: TYPES.VarChar
                         };

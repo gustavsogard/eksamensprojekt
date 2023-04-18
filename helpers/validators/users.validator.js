@@ -15,7 +15,7 @@ exports.validateLogIn = (reqUser, dbUser) => {
 }
 
 exports.validateCreate = (reqUser, dbUser) => {
-    if (reqUser.first_name === '' || reqUser.last_name === '' || reqUser.email === '' || reqUser.password === '' || reqUser.confirm === '') {
+    if (reqUser.name === '' || reqUser.email === '' || reqUser.password === '' || reqUser.confirm === '') {
         return 'All fields are required';
     }
 
@@ -35,7 +35,7 @@ exports.validateCreate = (reqUser, dbUser) => {
 }
 
 exports.validateUpdate = (reqUser, dbUser, email) => {
-    if (reqUser.first_name === '' || reqUser.last_name === '' || reqUser.email === '' || reqUser.password === '' || reqUser.confirm === '') {
+    if (reqUser.name === '' || reqUser.email === '' || reqUser.password === '' || reqUser.confirm === '') {
         return 'All fields are required';
     }
 

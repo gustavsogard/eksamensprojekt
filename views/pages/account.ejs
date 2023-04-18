@@ -14,18 +14,11 @@
                     <form class="form-horizontal" method="POST" action="/account">
 
                         <div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label">New First Name</label>
+                            <label for="name" class="cols-sm-2 control-label">New Name</label>
                             <div class="cols-sm-10">
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="first_name" id="first_name" placeholder="Enter your Name" value="<%= user.first_name %>" />
-                                </div>
-                            </div>
-                            <label for="name" class="cols-sm-2 control-label">New Last Name</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="last_name" id="last_name" placeholder="Enter your Name" value="<%= user.last_name %>" />
+                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name" value="<%= user.name %>" />
                                 </div>
                             </div>
                         </div>
