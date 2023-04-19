@@ -18,4 +18,9 @@ router.route('/article/:id/read')
       articlesController.readArticle(req, res);
     });
 
+router.route('/article/:id/favorite')
+    .get((req, res) => {
+      articlesController.addFavoriteArticle(req, res);
+    })
+
 module.exports = router;

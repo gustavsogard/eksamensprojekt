@@ -33,6 +33,13 @@ function Articles(operation, obj) {
                             article_id: TYPES.Int
                         };
                         break;
+                    case 'addFavorite':
+                        query = 'INSERT INTO favorite_articles (user_id, article_id) VALUES (@user_id, @article_id) ';
+                        parameters = {
+                            user_id: TYPES.Int,
+                            article_id: TYPES.Int
+                        };
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));

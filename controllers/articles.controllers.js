@@ -16,3 +16,12 @@ exports.readArticle = async (req, res) => {
         res.redirect('/article/' + req.params.id);
     }
 }
+
+exports.addFavoriteArticle = async (req, res) => {
+    if (!req.session.loggedin) {
+        res.redirect('/article/' + req.params.id);
+    } else {
+        await Articles('addFavorite', {article_id: req.params.id, user_id: req.session.user.id});
+        res.redirect('/article/' + req.params.id);
+    }
+}

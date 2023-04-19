@@ -28,7 +28,6 @@
         <h3>Kommentarer</h3>
         <% if (comments.length > 0) { %>
             <% comments.forEach(comment => { %>
-                
                 <p class="h3"><%= comment.name %>: <span><%= comment.content %></span></p>
             <% }) %>
         <% } else { %>
@@ -57,6 +56,12 @@
     linkTag.addEventListener('click', () => {
         window.open(url, '_blank');
         window.location.replace('/article/' + '<%= article.id %>' + '/read');
+    });
+
+    let favoriteBtn = document.getElementById('article-favorite');
+
+    favoriteBtn.addEventListener('click', () => {
+        window.location.replace('/article/' + '<%= article.id %>' + '/favorite');
     });
 </script>
 
