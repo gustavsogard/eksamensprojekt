@@ -22,7 +22,7 @@
       <div class="header">
         <div class="inner-header">
             <div class="logo">
-                <a href="/"><img src="/resources/Newsie-logo.png"></a>
+                <a href="/" style="all:unset; cursor:pointer; display:flex; justify-content: center; align-items: center; font-size: 20px; color:#363A55; font-weight: 600;"><span class='material-symbols-rounded' style="color: #363A55; font-size: 32px; margin-right: 10px;">newspaper</span>NowNews</a>
             </div>
             <div>
                 <form id="search-form" class="inner-header">
@@ -34,10 +34,8 @@
         </div>
         <div class="user" id="user-info">
           <% if (user) { %>
-            <p><%= user.name %></p>
-            <a href="/account">
-              <img src='/resources/defaultProfilePicture.png' style='width:40px; border-radius: 50%'>
-            </a>
+            <p style="margin-right: 10px"><%= user.name %></p>
+            <a href="/account"><span class='material-symbols-rounded' style="color: black">person</span></a>
             <a href="/logout"><span class='material-symbols-rounded' style="color: black">logout</span></a>
           <% } else { %>
             <a href='/register'>
