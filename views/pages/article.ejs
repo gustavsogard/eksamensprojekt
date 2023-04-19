@@ -1,27 +1,26 @@
+<%- include ("../partials/header.ejs") %>
 
+<h2><%= article.title %></h2>
+<p><%= article.description %> </p>
+<img src= <%= article.image %> >
 
-<body>
-    <%- include ("../partials/header.ejs") %>
-    <h1>Id for artiklen: <%= article[0].id %></h1>
-    <h2>Title: <%= article[0].title %></h2>
-    <h3>Description: <%= article[0].description %> </h3>
-    <img src= <%= article[0].image %> >
-    <input type="text" id="comment-box" placeholder="Enter comment">
-    <button id="post">Post</button>
-    <ul id="unordered">
-       
-   </ul>
-   
-   <%- include ("../partials/footer.ejs") %>
-    <script>
-        var post= document.getElementById("post");
-        post.addEventListener("click", function(){
-        var commentBoxValue= document.getElementById("comment-box").value;
+<h3>Comments</h3>
+<% if (comments.length > 0) { %>
+    <% comments.forEach(comment => { %>
+        
+        <p><%= comment.name %>: <b><%= comment.content %></b></p>
+    <% }) %>
+<% } else { %>
+    <p>No comments yet</p>
+<% } %>
 
-        var li = document.createElement("li");
-        var text = document.createTextNode(commentBoxValue);
-        li.appendChild(text);
-        document.getElementById("unordered").appendChild(li);
-        });
-    </script>
-</body>
+<% if (user) { %>
+    <form method="POST">
+        <input type="text" name="comment" placeholder="Enter comment">
+        <button type="submit">Post</button>
+    </form>
+<% } else { %>
+    <p>Log in to comment</p>
+<% } %>
+
+<%- include ("../partials/footer.ejs") %>

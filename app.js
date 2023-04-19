@@ -25,6 +25,8 @@ app.use('/', root);
 const articles = require('./routes/articles.route');
 app.use('/', articles);
 
+const user = require('./routes/user.route');
+app.use('/', user);
 
 app.listen(port, () => {
     console.log(`Running on port: ${port}`);

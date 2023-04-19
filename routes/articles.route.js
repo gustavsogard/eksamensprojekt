@@ -3,14 +3,14 @@
 const express = require('express');
 const router = express.Router();
 const articlesController = require('../controllers/articles.controllers');
+const commentsController = require('../controllers/comments.controllers');
 
-router.route('/articles/:id')
+router.route('/article/:id')
     .get((req, res) => {
-      console.log("tjek");
-      articlesController.renderArticle(req,res);
+      articlesController.renderArticle(req, res);
     })
     .post((req,res) => {
-      console.log('Post comment');  
+      commentsController.createComment(req, res);
     })
 
 
