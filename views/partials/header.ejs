@@ -25,7 +25,7 @@
                 <a href="/" style="all:unset; cursor:pointer; display:flex; justify-content: center; align-items: center; font-size: 20px; color:#363A55; font-weight: 600;"><span class='material-symbols-rounded' style="color: #363A55; font-size: 32px; margin-right: 10px;">newspaper</span>NowNews</a>
             </div>
             <div>
-                <form id="search-form" class="inner-header">
+                <form class="inner-header" action="/search" method="POST">
                     <input id="search-query" class="form-input searchbar" type="text" placeholder="Søgeord (fx. 'World Cup')">
                     <input id="search-publisher" class="form-input searchbar" type="text" placeholder="Udgiver (fx. 'forbes.com')">
                     <button class="btn btn-secondary search-btn"><span style="font-size:18px" class="material-symbols-rounded">search</span></button>
@@ -34,7 +34,7 @@
         </div>
         <div class="user" id="user-info">
           <% if (user) { %>
-            <p style="margin-right: 10px"><%= user.name %></p>
+            <p><%= user.name %></p>
             <a href="/account"><span class='material-symbols-rounded' style="color: black">person</span></a>
             <a href="/logout"><span class='material-symbols-rounded' style="color: black">logout</span></a>
           <% } else { %>

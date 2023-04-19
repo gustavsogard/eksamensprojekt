@@ -26,6 +26,13 @@ function Articles(operation, obj) {
                         };
                         
                         break;
+                    case 'read':
+                        query = 'INSERT INTO read_articles (user_id, article_id) VALUES (@user_id, @article_id) ';
+                        parameters = {
+                            user_id: TYPES.Int,
+                            article_id: TYPES.Int
+                        };
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));
@@ -55,7 +62,6 @@ function Articles(operation, obj) {
                         article[column.metadata.colName] = column.value;
                     })
                     response.push(article)
-                    console.log(response);
                 });
                 
                 // Handle the completion of the request

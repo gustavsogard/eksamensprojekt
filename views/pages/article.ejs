@@ -1,26 +1,64 @@
 <%- include ("../partials/header.ejs") %>
 
-<h2><%= article.title %></h2>
-<p><%= article.description %> </p>
-<img src= <%= article.image %> >
+<div class="left-side" style="max-width: 800px; padding: 0px 80px">
+    <div class="article-picture" style="height: 200px; background-image: url(<%= article.image %>)"></div>
+    <div class="article-metadata">
+        <div style="width: 60%;">
+            <p class="h2" id="article-title" style="margin-bottom: 15px"><%= article.title %></p>
+            <p class="h3">Skrevet af: <%= article.author %></p>
+        </div>
+        <div style="text-align:right">
+            <p class="h3"><%= article.published_at%></p>
+            <p class="h3"><%= article.source %></p>
+        </div>
+    </div>
+    <div class="article-content" style="margin-bottom: 20px">
+        <p class="paragraph"><%= article.description %></p>
+    </div>
+    <div class="inner-header">
+        <button id="article-favorite" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>
+        <a id="article-url" target="_blank">
+            <button class="btn btn-primary">
+                Gå til artikel
+            </button>
+        </a>
 
-<h3>Comments</h3>
-<% if (comments.length > 0) { %>
-    <% comments.forEach(comment => { %>
+    </div>
+    <div class="comments">
+        <h3>Kommentarer</h3>
+        <% if (comments.length > 0) { %>
+            <% comments.forEach(comment => { %>
+                
+                <p class="h3"><%= comment.name %>: <span><%= comment.content %></span></p>
+            <% }) %>
+        <% } else { %>
+            <p>No comments yet</p>
+        <% } %>
         
-        <p><%= comment.name %>: <b><%= comment.content %></b></p>
-    <% }) %>
-<% } else { %>
-    <p>No comments yet</p>
-<% } %>
+        <% if (user) { %>
+            <form method="POST" style="margin-top:10px">
+                <input type="text" name="comment" placeholder="Enter comment">
+                <button type="submit">Post</button>
+            </form>
+        <% } else { %>
+            <p class="paragraph">Log ind for at kommentere</p>
+        <% } %>     
+    </div>
+</div>
+<div class="right-side" style="display: flex; justify-content: center">
+    <div id="more-articles" class="articles-recommended"></div>
+</div>
 
-<% if (user) { %>
-    <form method="POST">
-        <input type="text" name="comment" placeholder="Enter comment">
-        <button type="submit">Post</button>
-    </form>
-<% } else { %>
-    <p>Log in to comment</p>
-<% } %>
+
+<script>
+    let url = '<%= article.url %>';
+    let linkTag = document.getElementById('article-url');
+
+    linkTag.addEventListener('click', () => {
+        window.open(url, '_blank');
+        window.location.replace('/article/' + '<%= article.id %>' + '/read');
+    });
+</script>
+
 
 <%- include ("../partials/footer.ejs") %>

@@ -13,5 +13,9 @@ router.route('/article/:id')
       commentsController.createComment(req, res);
     })
 
+router.route('/article/:id/read')
+    .get((req, res) => {
+      articlesController.readArticle(req, res);
+    });
 
 module.exports = router;

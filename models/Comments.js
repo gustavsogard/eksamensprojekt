@@ -67,7 +67,6 @@ function Comments(operation, obj) {
 
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
-                    console.log(comments);
                     resolve(comments);
                 });
 
