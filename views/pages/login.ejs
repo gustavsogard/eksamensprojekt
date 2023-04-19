@@ -1,45 +1,30 @@
-<%- include ("../partials/header.ejs") %>
-<div class="container">
-    <div class="row justify-content-center" style="margin-top: 40px">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align: center; font-weight: 600">Login</div>
-                <% if (error) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= error %>
-                    </div>
-                <% } %>
-                <div class="card-body">
-                    <form class="form-horizontal" method="post" action="/login">
-                        <div class="form-group">
-                            <label for="email" class="cols-sm-2 control-label">Your Email</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" />
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="password" class="cols-sm-2 control-label">Password</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group ">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Login</button>
-                        </div>
-                    </form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log ind - Newsie</title>
+    <link rel="icon" type="image/x-icon" href="/resources/Newsie-favicon.png">
+    <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+    <div class="credential-wrapper">
+        <div class="credential-container">
+            <a href="/"><img src="/resources/Newsie-logo.png" class="credential-logo"></a>
+            <p class="h2 credential-title">Log ind</p>
+            <% if (error) { %>
+                <div class="alert-text">
+                    <%= error %>
                 </div>
-            </div>
+            <% } %>
+            <form class="credential-form" method="POST">
+                <input class="form-input" name="email" type="email" placeholder="E-mail" required>
+                <input class="form-input" name="password" type="password" placeholder="Kodeord" required>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px">Log ind</button>
+            </form>
+            <p class="credential-info">Har du ikke en bruger? <a class="link" href="/register">Opret bruger</a></p>
         </div>
     </div>
-</div>
-
 </body>
 </html>
