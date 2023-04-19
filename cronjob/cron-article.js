@@ -4,6 +4,7 @@ const config = require('../config');
 
 // Define the Users class and its methods
 function Articles(obj) {
+    console.log(obj);
     const connection = new Connection(config);
     // Return a Promise for asynchronous handling
     return new Promise((resolve, reject) => {
@@ -14,7 +15,7 @@ function Articles(obj) {
                 reject(err);
             } else {
                 // Set up the SQL query and parameters based on the specified operation
-                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at) VALUES (data.articles[0].title, data.articles[0].description, data.articles[0].source, data.articles[0].source.name, data.articles[0].url, data.articles[0].urlToImage. data.articles[0].publishedAt)';
+                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at) VALUES (@title, @description, @source, @author, @url, @image. @publishedAt)';
                 parameters = {
                     title: TYPES.VarChar,
                     description: TYPES.VarChar,
@@ -23,7 +24,6 @@ function Articles(obj) {
                     url: TYPES.VarChar,
                     image: TYPES.VarChar, 
                     published_at: TYPES.VarChar
-
                 };
                         
                 
@@ -75,12 +75,21 @@ var job = new CronJob(
        const downloadBatch = async () => fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=5608686a49a04c6e8db72943b518feb5')
         .then((response) => response.json())           
         .then((data => {
-            Articles(data)
+            const dataKeys = {
+                title: data.articles[0].title,
+                description: data.articles[0].description,
+                author: data.articles[0].author,
+                source: data.articles[0].source.name,
+                url: data.articles[0].url,
+                image: data.articles[0].urlToImage,
+                publishedAt: data.articles[0].publishedAt
+            }
+            console.log(dataKeys.publishedAt);
+            Articles(dataKeys)
         }))
     downloadBatch()
     console.log('DONE');
     }
-    
     ,
     null,
     true
