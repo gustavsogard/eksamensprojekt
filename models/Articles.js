@@ -2,7 +2,7 @@
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 
-// Define the Users class and its methods
+// Define the articles class and its methods
 function Articles(operation, obj) {
     const connection = new Connection(config);
 

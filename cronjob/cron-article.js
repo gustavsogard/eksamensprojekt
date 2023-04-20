@@ -2,7 +2,11 @@ var CronJob = require('cron').CronJob;
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 
-// Define the Users class and its methods
+
+// definerer max karakterer, for vores database
+const MAX_DESCRIPTION_LENGTH = 255;
+
+// Define the articles class and its methods
 function Articles(obj) {
     console.log(obj);
     const connection = new Connection(config);
@@ -70,22 +74,38 @@ function Articles(obj) {
 }
 
 var job = new CronJob(
-    '*/10 * * * * *',
+    '*/59 * * * * *',
     function() {
        const downloadBatch = async () => fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=5608686a49a04c6e8db72943b518feb5')
         .then((response) => response.json())           
         .then((data => {
-            const dataKeys = {
-                title: data.articles[0].title,
-                description: data.articles[0].description,
-                author: data.articles[0].author,
-                source: data.articles[0].source.name,
-                url: data.articles[0].url,
-                image: data.articles[0].urlToImage,
-                published_at: data.articles[0].publishedAt // 
-              };
-            console.log(dataKeys.publishedAt);
-            Articles(dataKeys)
+            for (let i = 0; i < 10; i++) {
+
+                    let description = data.articles[i].description;
+                    // tjekker om description eksisterer, altså den ikke er null
+                    if (description) {
+                        // hvis den eksisterer, tjekker om den er længere end 255, som er vores max
+                        if (description.length > MAX_DESCRIPTION_LENGTH) {
+                            // skærer description ned til at passe til vores maks
+                            description = description.slice(0, MAX_DESCRIPTION_LENGTH);
+                        } 
+                        // hvis den ikke eksisterer bliver den blot sat til null. 
+                    } else {
+                        description = null;
+                    }
+
+                const dataKeys = {
+                    title: data.articles[i].title,
+                    description: description,
+                    author: data.articles[i].author,
+                    source: data.articles[i].source.name,
+                    url: data.articles[i].url,
+                    image: data.articles[i].urlToImage,
+                    published_at: data.articles[i].publishedAt // 
+                  }
+                Articles(dataKeys)
+            }
+            
         }))
     downloadBatch()
     console.log('DONE');
