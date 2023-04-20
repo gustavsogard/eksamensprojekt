@@ -15,7 +15,7 @@ function Articles(obj) {
                 reject(err);
             } else {
                 // Set up the SQL query and parameters based on the specified operation
-                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at) VALUES (@title, @description, @source, @author, @url, @image. @publishedAt)';
+                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at) VALUES (@title, @description, @source, @author, @url, @image, @published_At)';
                 parameters = {
                     title: TYPES.VarChar,
                     description: TYPES.VarChar,
@@ -82,8 +82,8 @@ var job = new CronJob(
                 source: data.articles[0].source.name,
                 url: data.articles[0].url,
                 image: data.articles[0].urlToImage,
-                publishedAt: data.articles[0].publishedAt
-            }
+                published_at: data.articles[0].publishedAt // 
+              };
             console.log(dataKeys.publishedAt);
             Articles(dataKeys)
         }))
