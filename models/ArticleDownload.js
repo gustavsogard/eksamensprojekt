@@ -1,11 +1,10 @@
-// Import the necessary modules
-const { Connection, Request, TYPES } = require('tedious');
-const config = require('../config');
+// definerer max karakterer, for vores database
+const MAX_DESCRIPTION_LENGTH = 255;
 
-// Define the Users class and its methods
-function Weather(operation, obj) {
+// Define the articles class and its methods
+function Articles(obj) {
+    console.log(obj);
     const connection = new Connection(config);
-
     // Return a Promise for asynchronous handling
     return new Promise((resolve, reject) => {
         // Set up a database connection
@@ -14,31 +13,20 @@ function Weather(operation, obj) {
                 console.log(err);
                 reject(err);
             } else {
-                let query = '';
-                let parameters = {};
-
                 // Set up the SQL query and parameters based on the specified operation
-                switch (operation) {
-                    case 'historical':
-                        query = 'INSERT INTO weather_historical (city, date, degrees) VALUES (@city, @date, @degrees)';
-                        parameters = {
-                            city: TYPES.VarChar,
-                            date: TYPES.DateTime,
-                            degrees: TYPES.Int
-                        };
-                        break;
-                    case 'forecast':
-                        query = 'INSERT INTO weather_forecast (city, date, degrees) VALUES (@city, @date, @degrees)';
-                        parameters = {
-                            city: TYPES.VarChar,
-                            date: TYPES.DateTime,
-                            degrees: TYPES.Int
-                        };
-                        break;
-                    default:
-                        console.log('No operation specified');
-                        reject(new Error('No operation specified'));
-                }
+                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at, category_id ) VALUES (@title, @description, @source, @author, @url, @image, @published_At, @category)';
+                parameters = {
+                    title: TYPES.VarChar,
+                    description: TYPES.VarChar,
+                    source: TYPES.VarChar,
+                    author: TYPES.VarChar,
+                    url: TYPES.VarChar,
+                    image: TYPES.VarChar, 
+                    published_at: TYPES.VarChar,
+                    category: TYPES.Int
+                };
+                        
+                
 
                 // Create a new Request object with the SQL query and parameters
                 const request = new Request(query, (err) => {
@@ -55,16 +43,17 @@ function Weather(operation, obj) {
                     request.addParameter(name, parameters[name], obj[name]);
                 });
 
-                let response = undefined;
+                let response = [];
 
                 // Handle each row of the response
                 request.on('row', (columns) => {
-                    response = {};
+                    let article = {};
                     columns.forEach((column) => {
-                        response[column.metadata.colName] = column.value;
-                    });
+                        article[column.metadata.colName] = column.value;
+                    })
+                    response.push(article)
                 });
-
+                
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
                     resolve(response);
@@ -79,6 +68,3 @@ function Weather(operation, obj) {
         connection.connect();
     });
 }
-
-// Export the Users class
-module.exports = Weather;
