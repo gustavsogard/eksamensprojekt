@@ -73,14 +73,15 @@ function Articles(obj) {
     });
 }
 
+let categories = ['sport', 'technology', 'environment']
+
 var job = new CronJob(
     '*/59 * * * * *',
     function() {
-       const downloadBatch = async () => fetch('https://newsapi.org/v2/top-headlines?country=us&apiKey=5608686a49a04c6e8db72943b518feb5')
+       const downloadBatch = async () => fetch(`https://newsapi.org/v2/top-headlines?category=${categories[i]}&apiKey=5608686a49a04c6e8db72943b518feb5`)
         .then((response) => response.json())           
         .then((data => {
             for (let i = 0; i < 10; i++) {
-
                     let description = data.articles[i].description;
                     // tjekker om description eksisterer, altså den ikke er null
                     if (description) {
