@@ -14,7 +14,7 @@ const ArticleDownload = require('../models/ArticleDownload')
 
 
 
-const categories = ['business', 'entertainment', 'general']
+const categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 
 var job = new CronJob(
     '*/30 * * * * *',
@@ -46,7 +46,7 @@ var job = new CronJob(
                         url: data.articles[i].url,
                         image: data.articles[i].urlToImage,
                         published_at: data.articles[i].publishedAt,
-                        category: j+1// 
+                        category: j+2// 
                       }
                     Articles(dataKeys)
                 }

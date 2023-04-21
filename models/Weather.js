@@ -35,6 +35,9 @@ function Weather(operation, obj) {
                             degrees: TYPES.Int
                         };
                         break;
+                    case 'truncate_tables':
+                        query = 'TRUNCATE table weather_historical; TRUNCATE table weather_forecast;';
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));
