@@ -1,4 +1,9 @@
+<h1>Tjek</h1>
 
-<%- include ("../partials/header.ejs") %>
+<p> <%= forecast[0].degrees %> degrees at <%= forecast[0].date %> </p> 
 
-<%- include ("../partials/footer.ejs") %>
+<% if (forecast[0].degrees > 8){ %>
+    <h1>It's HOT</h1>
+<% } else { %>
+    <h1>It's decent</h1>
+<% } %>

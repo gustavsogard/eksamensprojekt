@@ -59,21 +59,22 @@ function Weather(operation, obj) {
                     }
                 });
 
-                // Add the parameters to the Request object
-                Object.keys(parameters).forEach((name) => {
+                 // Add the parameters to the Request object
+                 Object.keys(parameters).forEach((name) => {
                     request.addParameter(name, parameters[name], obj[name]);
                 });
 
-                let response = undefined;
+                let response = [];
 
                 // Handle each row of the response
                 request.on('row', (columns) => {
-                    response = {};
+                    let article = {};
                     columns.forEach((column) => {
-                        response[column.metadata.colName] = column.value;
-                    });
+                        article[column.metadata.colName] = column.value;
+                    })
+                    response.push(article)
                 });
-
+                
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
                     resolve(response);

@@ -25,6 +25,9 @@ app.use('/', root);
 const articles = require('./routes/articles.route');
 app.use('/', articles);
 
+const weather = require('./routes/weather.route')
+app.use('/', weather)
+
 const user = require('./routes/user.route');
 app.use('/', user);
 
