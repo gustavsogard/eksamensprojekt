@@ -38,6 +38,12 @@ function Weather(operation, obj) {
                     case 'truncate_tables':
                         query = 'TRUNCATE table weather_historical; TRUNCATE table weather_forecast;';
                         break;
+                    case 'getWeatherHistorical':
+                        query = 'SELECT date, degrees FROM weather_historical'
+                        break;
+                    case 'getWeatherForecast': 
+                        query = 'SELECT date, degrees FROM weather_forecast'
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));
