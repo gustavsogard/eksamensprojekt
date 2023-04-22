@@ -1,9 +1,25 @@
-<h1>Tjek</h1>
+<h1>Forecast next 7 days</h1>
 
-<p> <%= forecast[0].degrees %> degrees at <%= forecast[0].date %> </p> 
+<% forecast.forEach(forecast => { %>
+    <p class="h3"><%= forecast.degrees %> Degrees at <span>Date: <%= forecast.date.toString().slice(0,11) %></span></p>
+    <% if (forecast.degrees > 11){ %>
+        <h2>It's HOT</h2>
+    <% } else { %>
+        <h3>It's decent</h3>
+    <% } %>
 
-<% if (forecast[0].degrees > 8){ %>
-    <h1>It's HOT</h1>
-<% } else { %>
-    <h1>It's decent</h1>
-<% } %>
+<% 
+}) %>
+
+
+<h1>Historical weather last 30 days</h1>
+
+<% historical.forEach(historical => { %>
+    <p class="h3"><%= historical.degrees %> Degrees at <span>Date: <%= historical.date.toString().slice(0,11) %></span></p>
+    
+
+<% 
+}) %>
+
+
+

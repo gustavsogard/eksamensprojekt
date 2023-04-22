@@ -68,11 +68,11 @@ function Weather(operation, obj) {
 
                 // Handle each row of the response
                 request.on('row', (columns) => {
-                    let article = {};
+                    let weather = {};
                     columns.forEach((column) => {
-                        article[column.metadata.colName] = column.value;
+                        weather[column.metadata.colName] = column.value;
                     })
-                    response.push(article)
+                    response.push(weather)
                 });
                 
                 // Handle the completion of the request
