@@ -39,10 +39,10 @@ function Weather(operation, obj) {
                         query = 'TRUNCATE table weather_historical; TRUNCATE table weather_forecast;';
                         break;
                     case 'getWeatherHistorical':
-                        query = 'SELECT date, degrees FROM weather_historical'
+                        query = 'SELECT date, degrees FROM weather_historical ORDER BY date ASC'
                         break;
                     case 'getWeatherForecast': 
-                        query = 'SELECT date, degrees FROM weather_forecast'
+                        query = 'SELECT date, degrees FROM weather_forecast ORDER BY date ASC'
                         break;
                     default:
                         console.log('No operation specified');
