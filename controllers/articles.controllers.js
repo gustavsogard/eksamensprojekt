@@ -8,11 +8,12 @@ exports.renderArticle = async (req,res) => {
 }
 
 exports.readArticle = async (req, res) => {
+    console.log('trying to add to read...');
     if (!req.session.loggedin) {
-        res.redirect('/article/' + req.params.id);
+        return;
     } else {
         await Articles('read', {article_id: req.params.id, user_id: req.session.user.id});
-        res.redirect('/article/' + req.params.id);
+        return;
     }
 }
 

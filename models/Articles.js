@@ -27,7 +27,7 @@ function Articles(operation, obj) {
                         
                         break;
                     case 'read':
-                        query = 'INSERT INTO read_articles (user_id, article_id) VALUES (@user_id, @article_id) ';
+                        query = 'INSERT INTO read_articles (user_id, article_id) SELECT @user_id, @article_id WHERE NOT EXISTS (SELECT user_id, article_id FROM read_articles WHERE user_id = @user_id AND article_id = @article_id))';
                         parameters = {
                             user_id: TYPES.Int,
                             article_id: TYPES.Int
