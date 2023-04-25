@@ -55,7 +55,7 @@
 
     linkTag.addEventListener('click', () => {
         window.open(url, '_blank');
-        window.location.replace('/article/' + '<%= article.id %>' + '/read');
+        fetch('/article/' + '<%= article.id %>' + '/read', {method: 'GET'})
     });
 
     let favoriteBtn = document.getElementById('article-favorite');

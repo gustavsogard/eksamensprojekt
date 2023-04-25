@@ -2,8 +2,8 @@
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 
-// Define the articles class and its methods
-function Articles(operation, obj) {
+// Define the Users class and its methods
+function Categories(operation, obj) {
     const connection = new Connection(config);
 
     // Return a Promise for asynchronous handling
@@ -19,26 +19,8 @@ function Articles(operation, obj) {
 
                 // Set up the SQL query and parameters based on the specified operation
                 switch (operation) {
-                    case 'getById':
-                        query = 'SELECT * FROM articles WHERE id = @id';
-                        parameters = {
-                            id: TYPES.Int
-                        };
-                        
-                        break;
-                    case 'read':
-                        query = 'INSERT INTO read_articles (user_id, article_id) SELECT @user_id, @article_id WHERE NOT EXISTS (SELECT user_id, article_id FROM read_articles WHERE user_id = @user_id AND article_id = @article_id))';
-                        parameters = {
-                            user_id: TYPES.Int,
-                            article_id: TYPES.Int
-                        };
-                        break;
-                    case 'addFavorite':
-                        query = 'INSERT INTO favorite_articles (user_id, article_id) VALUES (@user_id, @article_id) ';
-                        parameters = {
-                            user_id: TYPES.Int,
-                            article_id: TYPES.Int
-                        };
+                    case 'getAll':
+                        query = `SELECT * FROM categories`;
                         break;
                     default:
                         console.log('No operation specified');
@@ -60,20 +42,20 @@ function Articles(operation, obj) {
                     request.addParameter(name, parameters[name], obj[name]);
                 });
 
-                let response = [];
+                let categories = [];
 
                 // Handle each row of the response
                 request.on('row', (columns) => {
-                    let article = {};
+                    response = {};
                     columns.forEach((column) => {
-                        article[column.metadata.colName] = column.value;
-                    })
-                    response.push(article)
+                        response[column.metadata.colName] = column.value;
+                    });
+                    categories.push(response);
                 });
-                
+
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
-                    resolve(response);
+                    resolve(categories);
                 });
 
                 // Execute the SQL query
@@ -86,5 +68,5 @@ function Articles(operation, obj) {
     });
 }
 
-// Export the articles class
-module.exports = Articles;
+// Export the Users class
+module.exports = Categories;// Export the Users class
