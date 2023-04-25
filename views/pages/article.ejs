@@ -1,14 +1,18 @@
 <%- include ("../partials/header.ejs") %>
 
-<div class="left-side" style="max-width: 800px; padding: 0px 80px">
-    <div class="article-picture" style="height: 200px; background-image: url(<%= article.image %>)"></div>
+<div class="left-side" style="max-width: 800px; padding: 40px 80px">
+    <div class="article-picture" style="height: 200px; background-image: url(<%= article.image %>)">
+        <% if (article.article_read == 1) { %>
+            <div class="article-read">LÆST</div>
+        <% } %>
+    </div>
     <div class="article-metadata">
         <div style="width: 60%;">
             <p class="h2" id="article-title" style="margin-bottom: 15px"><%= article.title %></p>
             <p class="h3">Skrevet af: <%= article.author %></p>
         </div>
         <div style="text-align:right">
-            <p class="h3"><%= article.published_at%></p>
+            <p class="h3"><%= article.published_at %></p>
             <p class="h3"><%= article.source %></p>
         </div>
     </div>
@@ -16,7 +20,15 @@
         <p class="paragraph"><%= article.description %></p>
     </div>
     <div class="inner-header">
-        <button id="article-favorite" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>
+
+        <% if (user) { %>
+            <% if (article.added_to_favorite) { %>
+                <button id="article-favorite" onclick="removeFromFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite enabled-favorite">favorite</span></button>
+            <% } else { %>
+                <button id="article-favorite" onclick="addToFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>
+            <% } %>
+        <% } %>
+
         <a id="article-url" target="_blank">
             <button class="btn btn-primary">
                 Gå til artikel
@@ -60,10 +72,20 @@
 
     let favoriteBtn = document.getElementById('article-favorite');
 
-    favoriteBtn.addEventListener('click', () => {
-        window.location.replace('/article/' + '<%= article.id %>' + '/favorite');
-    });
-</script>
+    removeFromFavorite = (id) => {
+        alert('Artikel fjernet fra favoritter');
+        fetch('/article/' + id + '/removeFavorite', {method: 'GET'});
+        favoriteBtn.childNodes[0].classList.remove('enabled-favorite');
+        favoriteBtn.onclick = () => addToFavorite(id);
+    }
 
+    addToFavorite = (id) => {
+        alert('Artikel tilføjet til favoritter');
+        fetch('/article/' + id + '/favorite', {method: 'GET'});
+        favoriteBtn.childNodes[0].classList.add('enabled-favorite');
+        favoriteBtn.onclick = () => removeFromFavorite(id);
+    }
+
+</script>
 
 <%- include ("../partials/footer.ejs") %>

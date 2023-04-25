@@ -20,21 +20,43 @@ function Articles(operation, obj) {
                 // Set up the SQL query and parameters based on the specified operation
                 switch (operation) {
                     case 'getById':
-                        query = 'SELECT * FROM articles WHERE id = @id';
+                        query = `
+                            SELECT
+                                articles.*,
+                                CASE WHEN favorite_articles.article_id IS NOT NULL THEN 1 ELSE 0 END as added_to_favorite,
+                                CASE WHEN read_articles.article_id IS NOT NULL THEN 1 ELSE 0 END as article_read
+                            FROM
+                                articles
+                                LEFT JOIN favorite_articles
+                                    ON articles.id = favorite_articles.article_id
+                                    AND favorite_articles.user_id = @user_id
+                                LEFT JOIN read_articles
+                                    ON articles.id = read_articles.article_id
+                                    AND read_articles.user_id = @user_id
+                            WHERE
+                                articles.id = @id
+                        `;
                         parameters = {
-                            id: TYPES.Int
+                            id: TYPES.Int,
+                            user_id: TYPES.Int
                         };
-                        
                         break;
                     case 'read':
-                        query = 'INSERT INTO read_articles (user_id, article_id) SELECT @user_id, @article_id WHERE NOT EXISTS (SELECT user_id, article_id FROM read_articles WHERE user_id = @user_id AND article_id = @article_id))';
+                        query = 'INSERT INTO read_articles (user_id, article_id) SELECT @user_id, @article_id WHERE NOT EXISTS (SELECT user_id, article_id FROM read_articles WHERE user_id = @user_id AND article_id = @article_id)';
                         parameters = {
                             user_id: TYPES.Int,
                             article_id: TYPES.Int
                         };
                         break;
                     case 'addFavorite':
-                        query = 'INSERT INTO favorite_articles (user_id, article_id) VALUES (@user_id, @article_id) ';
+                        query = 'INSERT INTO favorite_articles (user_id, article_id) VALUES (@user_id, @article_id)';
+                        parameters = {
+                            user_id: TYPES.Int,
+                            article_id: TYPES.Int
+                        };
+                        break;
+                    case 'removeFavorite':
+                        query = 'DELETE FROM favorite_articles WHERE user_id = @user_id AND article_id = @article_id';
                         parameters = {
                             user_id: TYPES.Int,
                             article_id: TYPES.Int

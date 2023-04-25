@@ -23,4 +23,9 @@ router.route('/article/:id/favorite')
       articlesController.addFavoriteArticle(req, res);
     })
 
+router.route('/article/:id/removeFavorite')
+    .get((req, res) => {
+      articlesController.removeFavoriteArticle(req, res);
+    })
+
 module.exports = router;

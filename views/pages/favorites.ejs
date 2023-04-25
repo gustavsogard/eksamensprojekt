@@ -10,15 +10,13 @@
     <div style="width: 100%">
         <p class="h2">Kategorier</p>
         <div id="favorite-categories" class="favorite-categories">
-            <% let id = 2; %>
             <% categories.forEach(element => { %>
                 <div style="display:flex">
                     <button class="btn btn-primary"><%= element.name %></button>
-                    <button class="favorite_btn" style="all:unset" id="<%= id %>"> 
+                    <button class="favorite_btn" style="all:unset" id="<%= element.id %>">
                         <span class="material-symbols-rounded article-favorite">favorite</span>
                     </button>
                 </div>
-                <% id += 1; %>
             <% }) %>
         </div>
     </div>
