@@ -1,7 +1,78 @@
 <%- include ("../partials/header.ejs") %>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NowNews</title>
+    <link rel="icon" type="image/x-icon" href="/resources/Newsie-favicon.png">
+    <link rel="stylesheet" href="/public/views.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
+</head>
 <% if (user) { %>
     <h1>Welcome, <%= user.name %></h1>
 <% } else { %>
     <h1>Welcome, Guest</h1>
 <% } %>
+<div id="view" class="main">
+    <div id="news" class="left-side">
+        <p class="h2">Nyheder</p>
+        <div class="inner-header" style="height: 300px">
+            <img style="width: 80px" src="/resources/loading.gif">
+        </div>
+    </div>
+    <div class="right-side">
+        <div>
+            <p class="h2">Tid</p>
+            <div class="time-weather-container">
+                <div>
+                    <p class="date-timestamp" id="date"></p>
+                    <p class="h2" id="timestamp"></p>
+                    <p class="info-timestamp" id="timezone"></p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="h2">Vejr</p>
+            <div class="time-weather-container" style="margin-bottom: 10px">
+                <div class="current-weather">
+                    <div class="weather-inner">
+                        <span class="material-symbols-rounded" id="weatherIcon"></span>
+                        <p id="currentWeather"></p>
+                    </div>
+                    <div>
+                        <p class="info-timestamp" id="weatherLocation">København</p>
+                    </div>
+                </div>
+                <div class="sun-div">
+                    <div class="sun-div-inner">
+                        <div>
+                            <span class="material-symbols-rounded">sunny</span>
+                        </div>
+                        <div class="sun-div-text">
+                            <p class="info-timestamp">Solopgang</p>
+                            <p class="h2" id="sunrise"></p>
+                        </div>
+                    </div>
+                    <div class="sun-div-inner">
+                        <div>
+                            <span class="material-symbols-rounded">dark_mode</span>
+                        </div>
+                        <div class="sun-div-text">
+                            <p class="info-timestamp">Solnedgang</p>
+                            <p class="h2" id="sunset"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="time-weather-container forecast">
+                <p class="h2" style="font-size: 12px">De næste 7 dage</p>
+                <div class="inner-forecast" id="forecast"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
 <%- include ("../partials/footer.ejs") %>
