@@ -8,4 +8,9 @@ router.route('/favorites')
         favoritesController.renderFavorites(req, res);
     })
 
+router.route('/favorites/categories/:id/addFavorite')
+    .get((req, res) => {
+        favoritesController.addFavoriteCategory(req, res);
+    })
+
 module.exports = router;

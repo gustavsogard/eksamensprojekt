@@ -22,6 +22,13 @@ function Categories(operation, obj) {
                     case 'getAll':
                         query = `SELECT * FROM categories`;
                         break;
+                    case 'addFavorite':
+                        query = 'INSERT INTO favorite_categories (user_id, category_id) SELECT @user_id, @category_id WHERE NOT EXISTS (SELECT user_id, category_id FROM favorite_categories WHERE user_id = @user_id AND category_id = @category_id)';
+                        parameters = {
+                            user_id: TYPES.Int,
+                            category_id: TYPES.Int
+                        };
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));
