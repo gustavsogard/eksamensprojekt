@@ -1,5 +1,6 @@
 var CronJob = require('cron').CronJob;
 const ArticleDownload = require('../models/ArticleDownload')
+const apiKey = require('../keys.json')
 
 // der er en foreign key constraint, der gør at vi ikke kan lægge kategorierne ind
 /* 
@@ -11,16 +12,16 @@ const ArticleDownload = require('../models/ArticleDownload')
 
 
 const MAX_DESCRIPTION_LENGTH = 255;
+let imgCount = 0
 
 const categoriesORG = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
-console.log(categoriesORG.length);
 const categoriesAI = ['dmoz%2FBusiness', 'news/Arts_and_Entertainment', 'dmoz', 'news%2FHealth', 'dmoz%2FScience', 'dmoz%2FSports', 'news%2FTechnology']
 var job = new CronJob(
-    '*/59 * * * * *',
+    '*/30 * * * * *',
     async function() {
         console.log('STARTING CRONJOB');
         for (let j = 0; j < categoriesORG.length; j++) {
-            let fetchUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${categoriesORG[j]}&apiKey=8073740264ab4a33b013bff18f643247`
+            let fetchUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${categoriesORG[j]}&apiKey=${apiKey.API.ORG}`
             await fetch(fetchUrl)
             .then((response) => response.json())           
             .then((async data => {
@@ -29,6 +30,7 @@ var job = new CronJob(
                         continue
                     } */
                     // gør så vi ikke får artikler uden billeder
+
                         let description = data.articles[i].description;
                         // tjekker om description eksisterer, altså den ikke er null
                         if (description) {
@@ -56,16 +58,16 @@ var job = new CronJob(
                 }
                 
             }))
-            let fetchUrl2 = `https://www.newsapi.ai/api/v1/article/getArticles?query=%7B%22%24query%22%3A%7B%22categoryUri%22%3A%22${categoriesAI[j]}%22%7D%2C%22%24filter%22%3A%7B%22forceMaxDataTimeWindow%22%3A%2231%22%7D%7D&resultType=articles&articlesSortBy=date&articlesCount=10&includeArticleImage=true&includeArticleLinks=true&articleBodyLen=-1&apiKey=1ffc790e-383e-4086-b734-9ad99812c11c`
+            let fetchUrl2 = `https://www.newsapi.ai/api/v1/article/getArticles?query=%7B%22%24query%22%3A%7B%22%24and%22%3A%5B%7B%22categoryUri%22%3A%22${categoriesAI[j]}%22%7D%2C%7B%22lang%22%3A%22eng%22%7D%5D%7D%2C%22%24filter%22%3A%7B%22forceMaxDataTimeWindow%22%3A%2231%22%7D%7D&resultType=articles&articlesSortBy=date&articlesCount=10&includeArticleImage=true&includeArticleLinks=true&articleBodyLen=-1&apiKey=${apiKey.API.AI}`
             
             await fetch(fetchUrl2)
             .then((response) => response.json())           
             .then((async data => {
-                console.log(j);
-                console.log("2. api");
                 for (let i = 0; i < 2; i++) {
-                    
                     let description = data.articles.results[i].description;
+                    if(data.articles.results[i].image){
+                        imgCount++
+                    }
                     // tjekker om description eksisterer, altså den ikke er null
                     if (description) {
                         // hvis den eksisterer, tjekker om den er længere end 255, som er vores max
@@ -74,8 +76,8 @@ var job = new CronJob(
                             description = description.slice(0, MAX_DESCRIPTION_LENGTH);
                         } 
                         // hvis den ikke eksisterer bliver den blot sat til null. 
-                    } else {
-                        continue
+                    } else{
+                        description = 'Ingen beskrivelse'
                     }
     
                     const dataKeys = {
@@ -88,13 +90,13 @@ var job = new CronJob(
                         published_at: data.articles.results[i].publishedAt,
                         category: j+2// 
                       }
-                      console.log(dataKeys);
                      ArticleDownload(dataKeys)
                 }
                 
             }))
         }
-        console.log('Cronjob DONE');
+
+        console.log('CRONJOB DONE');
       
     }
     ,
