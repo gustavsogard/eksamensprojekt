@@ -20,19 +20,21 @@ function Weather(operation, obj) {
                 // Set up the SQL query and parameters based on the specified operation
                 switch (operation) {
                     case 'historical':
-                        query = 'INSERT INTO weather_historical (city, date, degrees) VALUES (@city, @date, @degrees)';
+                        query = 'INSERT INTO weather_historical (city, date, degrees, weathercode) VALUES (@city, @date, @degrees, @weathercode)';
                         parameters = {
                             city: TYPES.VarChar,
                             date: TYPES.DateTime,
-                            degrees: TYPES.Int
+                            degrees: TYPES.Int,
+                            weathercode: TYPES.Int
                         };
                         break;
                     case 'forecast':
-                        query = 'INSERT INTO weather_forecast (city, date, degrees) VALUES (@city, @date, @degrees)';
+                        query = 'INSERT INTO weather_forecast (city, date, degrees, weathercode) VALUES (@city, @date, @degrees, @weathercode)';
                         parameters = {
                             city: TYPES.VarChar,
                             date: TYPES.DateTime,
-                            degrees: TYPES.Int
+                            degrees: TYPES.Int,
+                            weathercode: TYPES.Int
                         };
                         break;
                     case 'truncate_tables':
