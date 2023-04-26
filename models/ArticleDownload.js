@@ -3,18 +3,15 @@ const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 // Define the articles class and its methods
 function ArticleDownload(obj) {
-    console.log("tries connection");
     const connection = new Connection(config);
     // Return a Promise for asynchronous handling
     return new Promise((resolve, reject) => {
         // Set up a database connection
         connection.on('connect', (err) => {
-            console.log("connection");
             if (err) {
                 console.log(err);
                 reject(err);
             } else {
-                console.log("Insert SQL");
                 // Set up the SQL query and parameters based on the specified operation
                 query = `INSERT INTO articles (title, description, source, author, url, image, published_at, category_id)
                         SELECT @title, @description, @source, @author, @url, @image, @published_At, @category
