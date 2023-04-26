@@ -283,6 +283,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items:flex-end;
+    background-position: center;
 }
 
 .banner-title {
@@ -389,6 +390,7 @@ body {
     display: flex;
     align-items: flex-start;
     justify-content: end;
+    background-position: center;
 }
 
 .time-weather-container {

@@ -2,7 +2,7 @@
 const MAX_DESCRIPTION_LENGTH = 255;
 
 // Define the articles class and its methods
-function Articles(obj) {
+function ArticleDownload(obj) {
     console.log(obj);
     const connection = new Connection(config);
     // Return a Promise for asynchronous handling

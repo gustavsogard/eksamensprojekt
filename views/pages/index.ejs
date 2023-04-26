@@ -12,24 +12,43 @@
     <h1>Welcome, <%= user.name %></h1>
 <% } else { %>
     <h1>Welcome, Guest</h1>
-<% } %>
+<% } %> 
+<% let articleLarge = articles.shift() %>
+
 <div id="view" class="main">
     <div id="news" class="left-side">
         <p class="h2">Nyheder</p>
-        <div class="inner-header" style="height: 300px">
-            <% articles.forEach(article => { %>
-         
-                 <div class="article-div"> 
-                    <div class="article-picture" style="background-image: url('<%= article.image %>')"></div> 
-                    <div class="article-content">
-                        <div class="article-title" style="cursor:default"><%= article.title %></div>
-                        <div class="article-misc">
-                            <p class="article-publisher"><%= article.source %></p>
-            <!--                 <a target="_blank"><button onclick="viewArticle(${article.id}, timestampInterval, navItems)" class="btn btn-primary readMoreBtn">Læs mere</button></a> -->
-                        </div>
+        <div class="article-large">
+            <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= articleLarge.image %>');">
+                <div class="inner-banner">
+                    <div class="banner-text">
+                        <p class="banner-title" id="bannerTitle"><%= articleLarge.title %></p>
+                        <p class="banner-publisher" id="bannerPublisher"> <%= articleLarge.source %></p>
+                    </div>
+                    <div class="banner-btn-section">
+                        <a href="/article/<%= articleLarge.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
                     </div>
                 </div>
-            <% }) %>
+            </div>
+        </div>
+        <div class="articles-small" style="height: 300px">
+            <% for (let i = 0; i < 3; i++) { %>
+                <div class="article-row">
+                <% for (let j = 0; j < 3; j++) { %>
+                    <div class="article-div"> 
+                        <div class="article-picture" style="background-image: url('<%= articles[j+(i*3)].image %>')"></div> 
+                        <div class="article-content">
+                            <div class="article-title" style="cursor:default"><%= articles[j+(i*3)].title %></div>
+                            <div class="article-misc">
+                                <p class="article-publisher"><%= articles[j+(i*3)].source %></p>
+                                <a href="/article/<%= articles[j+(i*3)].id %>"><button class="btn btn-primary readMoreBtn">Læs mere</button></a>
+                            </div>
+                        </div>
+                    </div>
+
+                <% } %>
+                </div>
+            <% } %>
         </div>
     </div>
     <div class="right-side">

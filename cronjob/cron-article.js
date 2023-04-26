@@ -48,7 +48,7 @@ var job = new CronJob(
                         published_at: data.articles[i].publishedAt,
                         category: j+2// 
                       }
-                    Articles(dataKeys)
+                    ArticleDownload(dataKeys)
                 }
                 
             }))
