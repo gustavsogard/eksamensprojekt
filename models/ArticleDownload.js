@@ -1,6 +1,6 @@
 // definerer max karakterer, for vores database
-const MAX_DESCRIPTION_LENGTH = 255;
-
+const { Connection, Request, TYPES } = require('tedious');
+const config = require('../config');
 // Define the articles class and its methods
 function ArticleDownload(obj) {
     console.log(obj);
@@ -14,7 +14,12 @@ function ArticleDownload(obj) {
                 reject(err);
             } else {
                 // Set up the SQL query and parameters based on the specified operation
-                query = 'INSERT INTO articles (title, description, source, author, url, image, published_at, category_id ) VALUES (@title, @description, @source, @author, @url, @image, @published_At, @category)';
+                query = `INSERT INTO articles (title, description, source, author, url, image, published_at, category_id)
+                        SELECT @title, @description, @source, @author, @url, @image, @published_At, @category
+                        WHERE NOT EXISTS
+                            (SELECT url
+                            FROM articles
+                            WHERE url = @url)`
                 parameters = {
                     title: TYPES.VarChar,
                     description: TYPES.VarChar,
@@ -68,3 +73,5 @@ function ArticleDownload(obj) {
         connection.connect();
     });
 }
+
+module.exports = ArticleDownload;

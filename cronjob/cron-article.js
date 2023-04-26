@@ -1,6 +1,4 @@
 var CronJob = require('cron').CronJob;
-const { Connection, Request, TYPES } = require('tedious');
-const config = require('../config');
 const ArticleDownload = require('../models/ArticleDownload')
 
 // der er en foreign key constraint, der gør at vi ikke kan lægge kategorierne ind
@@ -12,19 +10,25 @@ const ArticleDownload = require('../models/ArticleDownload')
 */
 
 
-
+const MAX_DESCRIPTION_LENGTH = 255;
 
 const categories = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 
 var job = new CronJob(
-    '*/30 * * * * *',
-    function() {
-        for (let j = 0; j <= categories.length; j++) {
-            console.log(categories[j]);
-            const downloadBatch = async () => fetch(`https://newsapi.org/v2/top-headlines?country=us&category=${categories[j]}&apiKey=5608686a49a04c6e8db72943b518feb5`)
+    '*/15 * * * * *',
+    async function() {
+        console.log('STARTING CRONJOB');
+        for (let j = 0; j < categories.length; j++) {
+            let fetchUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${categories[j]}&apiKey=5608686a49a04c6e8db72943b518feb5`
+            await fetch(fetchUrl)
             .then((response) => response.json())           
             .then((data => {
                 for (let i = 0; i < 2; i++) {
+                    // gør så vi ikke får artikler uden billeder
+                    if(data.articles[i].urlToImage == null){
+                        continue;
+                    }
+                    console.log(data.articles[i]);
                         let description = data.articles[i].description;
                         // tjekker om description eksisterer, altså den ikke er null
                         if (description) {
@@ -52,10 +56,10 @@ var job = new CronJob(
                 }
                 
             }))
-        downloadBatch()
-        console.log('DONE');
+        
             
         }
+        console.log('Cronjob DONE');
       
     }
     ,
