@@ -62,6 +62,20 @@ function Articles(operation, obj) {
                             article_id: TYPES.Int
                         };
                         break;
+                    case 'get12':
+                        query = `
+                            SELECT
+                                *
+                            FROM
+                                articles
+                            ORDER BY published_at DESC
+                            OFFSET @page * 12 ROWS
+                            FETCH FIRST 12 ROWS ONLY
+                        `;
+                        parameters = {
+                            page: TYPES.Int
+                        }
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));

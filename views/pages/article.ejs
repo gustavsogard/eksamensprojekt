@@ -22,7 +22,7 @@
     <div class="inner-header">
 
         <% if (user) { %>
-            <% if (article.added_to_favorite) { %>
+            <% if (article.added_to_favorite == 1) { %>
                 <button id="article-favorite" onclick="removeFromFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite enabled-favorite">favorite</span></button>
             <% } else { %>
                 <button id="article-favorite" onclick="addToFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>

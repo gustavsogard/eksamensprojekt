@@ -17,7 +17,11 @@
     <div id="news" class="left-side">
         <p class="h2">Nyheder</p>
         <div class="inner-header" style="height: 300px">
-            <img style="width: 80px" src="/resources/loading.gif">
+            <% articles.forEach(el => { %>
+            <div>
+                <h2><%= el.title %></h2>
+            </div>
+            <% }) %>
         </div>
     </div>
     <div class="right-side">
