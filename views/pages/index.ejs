@@ -1,23 +1,14 @@
 <%- include ("../partials/header.ejs") %>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NowNews</title>
-    <link rel="icon" type="image/x-icon" href="/resources/Newsie-favicon.png">
-    <link rel="stylesheet" href="/public/views.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0" />
-</head>
-<% if (user) { %>
-    <h1>Welcome, <%= user.name %></h1>
-<% } else { %>
-    <h1>Welcome, Guest</h1>
-<% } %> 
+
 <% let articleLarge = articles.shift() %>
 
 <div id="view" class="main">
     <div id="news" class="left-side">
-        <p class="h2">Nyheder</p>
+        <% if (user) { %>
+            <h1 class="h2">Welcome, <%= user.name %></p>
+        <% } else { %>
+            <p class="h2">Welcome, Guest</p>
+        <% } %> 
         <div class="article-large">
             <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= articleLarge.image %>');">
                 <div class="inner-banner">
@@ -31,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="articles-small" style="height: 300px">
+        <div class="articles-small">
             <% for (let i = 0; i < 3; i++) { %>
                 <div class="article-row">
                 <% for (let j = 0; j < 3; j++) { %>
@@ -45,10 +36,12 @@
                             </div>
                         </div>
                     </div>
-
                 <% } %>
                 </div>
             <% } %>
+        </div>
+        <div class="inner-header">
+            <button class="btn btn-secondary" id="loadMore">Indlæs flere</button>
         </div>
     </div>
     <div class="right-side">
@@ -97,7 +90,22 @@
             </div>
             <div class="time-weather-container forecast">
                 <p class="h2" style="font-size: 12px">De næste 7 dage</p>
-                <div class="inner-forecast" id="forecast"></div>
+                <div class="inner-forecast" id="forecast">
+                    <% weather_forecast.forEach(day => { %>
+                        <div class="forecast-day">
+                            <% let date = day.date.toString().slice(0,11) %>
+                            <p class="forecast-day-name"><%= date %></p>
+                            <div class="forecast-day-inner">
+                                <span class="material-symbols-rounded" id="forecastIcon"></span>
+                                
+                                <p class="forecast-day-temp"><%= day.degrees %>°</p>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: center">
+                <a href="/weather"><button class="btn btn-secondary">Se alt om vejr</button></a>
             </div>
         </div>
     </div>
