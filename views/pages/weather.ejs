@@ -1,38 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather</title>
-  <link rel="stylesheet" href="../../public/weather.css">
-</head>
 <%- include ("../partials/header.ejs") %>
-<body>
-    <div id="forecast">
-        <h1>Forecast next 7 days</h1>
-  <ul>
-    <% forecast.forEach(forecast => { %>
-      <li>
-        <p class="h3"><%= forecast.degrees %> Degrees at <span>Date: <%= forecast.date.toString().slice(0,11) %></span></p>
-        <% if (forecast.degrees > 11){ %>
-          <h2>It's HOT</h2>
-        <% } else { %>
-          <h3>It's decent</h3>
-        <% } %>
-      </li>
+
+<div class="weather-container">
+  <div class="forecast-container">
+    <p class="h2">Forecast</p>
+    <% forecast.forEach(weatherData => { %>
+      <div class="forecast-small">
+        <p class="forecast-day-name"><%= weatherData.date.toString().slice(0,11) %></p>
+        <p class="forecast-day-temp"><%= weatherData.degrees %></p>
+        <p class="forecast-day-temp"><%= weatherData.weathercode %></p>
+      </div>
+
     <% }) %>
-  </ul>
-    </div>
-<div id="historical">
-    <h1>Historical weather last 30 days</h1>
-  <ul>
+  </div>
+  <div class="historical-container">
+    <p class="h2">Historical (30 days)</p>
+  </div>
+</div>
+
+
+
+<!-- <div id="historical">
+    <h1>Historical (last 30 days)</h1>
+  
     <% historical.forEach(historical => { %>
-      <li>
+      
         <p class="h3"><%= historical.degrees %> Degrees at <span>Date: <%= historical.date.toString().slice(0,11) %></span></p>
       </li>
     <% }) %>
-  </ul>
-</div>
-  
-</body>
-</html>
+  -->
+
