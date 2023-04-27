@@ -5,7 +5,7 @@ var job = new CronJob(
     '*/15 * * * * *',
     async function() {
         Weather('truncate_tables');
-        await fetch(`https://api.open-meteo.com/v1/forecast?latitude=55.68&longitude=12.52&daily=weathercode,temperature_2m_max,temperature_2m_min&past_days=31&timezone=Europe%2FBerlin`)
+        await fetch(`https://api.open-meteo.com/v1/forecast?latitude=55.68&longitude=12.52&daily=weathercode,sunrise,sunset,temperature_2m_max,temperature_2m_min&past_days=31&timezone=Europe%2FBerlin`)
         .then((response) => response.json())           
         .then((data => {
             console.log("running data")
@@ -23,7 +23,9 @@ var job = new CronJob(
                     city: data.timezone,
                     date: data.daily.time[i],
                     degrees: data.daily.temperature_2m_max[i],
-                    weathercode: data.daily.weathercode[i]
+                    weathercode: data.daily.weathercode[i],
+                    sunrise: data.daily.sunrise[i],
+                    sunset: data.daily.sunset[i]
                     }
                 Weather('forecast', weatherObject_forecast)
             }

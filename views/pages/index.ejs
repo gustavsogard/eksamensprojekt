@@ -60,8 +60,8 @@
             <div class="time-weather-container" style="margin-bottom: 10px">
                 <div class="current-weather">
                     <div class="weather-inner">
-                        <span class="material-symbols-rounded" id="weatherIcon"></span>
-                        <p id="currentWeather"></p>
+                        <span class="material-symbols-rounded" id="weatherIcon"><%= getCorrectIcon(weather_forecast[0].weathercode) %></span>
+                        <p id="currentWeather"><%= weather_forecast[0].degrees %> &#8451</p>
                     </div>
                     <div>
                         <p class="info-timestamp" id="weatherLocation">København</p>
@@ -74,7 +74,7 @@
                         </div>
                         <div class="sun-div-text">
                             <p class="info-timestamp">Solopgang</p>
-                            <p class="h2" id="sunrise"></p>
+                            <p class="h2" id="sunrise"><%= weather_forecast[0].sunrise.toString().slice(15,21) %></p>
                         </div>
                     </div>
                     <div class="sun-div-inner">
@@ -83,7 +83,7 @@
                         </div>
                         <div class="sun-div-text">
                             <p class="info-timestamp">Solnedgang</p>
-                            <p class="h2" id="sunset"></p>
+                            <p class="h2" id="sunset"><%= weather_forecast[0].sunset.toString().slice(15,21) %></p>
                         </div>
                     </div>
                 </div>
@@ -96,9 +96,8 @@
                             <% let date = day.date.toString().slice(0,11) %>
                             <p class="forecast-day-name"><%= date %></p>
                             <div class="forecast-day-inner">
-                                <span class="material-symbols-rounded" id="forecastIcon"></span>
-                                
-                                <p class="forecast-day-temp"><%= day.degrees %>°</p>
+                                <span class="material-symbols-rounded" id="forecastIcon"><%= getCorrectIcon(day.weathercode) %></span>
+                                <p class="forecast-day-temp"><%= day.degrees %> &#8451</p>
                             </div>
                         </div>
                     <% }) %>
