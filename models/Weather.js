@@ -29,12 +29,14 @@ function Weather(operation, obj) {
                         };
                         break;
                     case 'forecast':
-                        query = 'INSERT INTO weather_forecast (city, date, degrees, weathercode) VALUES (@city, @date, @degrees, @weathercode)';
+                        query = 'INSERT INTO weather_forecast (city, date, degrees, weathercode, sunrise, sunset) VALUES (@city, @date, @degrees, @weathercode, @sunrise, @sunset)';
                         parameters = {
                             city: TYPES.VarChar,
                             date: TYPES.DateTime,
                             degrees: TYPES.Int,
-                            weathercode: TYPES.Int
+                            weathercode: TYPES.Int,
+                            sunrise: TYPES.DateTime,
+                            sunset: TYPES.DateTime
                         };
                         break;
                     case 'truncate_tables':
@@ -44,7 +46,7 @@ function Weather(operation, obj) {
                         query = 'SELECT date, degrees, weathercode FROM weather_historical ORDER BY date DESC'
                         break;
                     case 'getWeatherForecast':
-                        query = 'SELECT date, degrees, weathercode FROM weather_forecast ORDER BY date ASC'
+                        query = 'SELECT date, degrees, weathercode, sunrise, sunset FROM weather_forecast ORDER BY date ASC'
                         break;
                     default:
                         console.log('No operation specified');
