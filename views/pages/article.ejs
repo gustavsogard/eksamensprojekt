@@ -23,7 +23,7 @@
 
         <% if (user) { %>
             <% if (article.added_to_favorite == 1) { %>
-                <button id="article-favorite" onclick="removeFromFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite enabled-favorite">favorite</span></button>
+                <button id="article-favorite" onclick="removeFromFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-outlined article-favorite enabled-favorite">favorite</span></button>
             <% } else { %>
                 <button id="article-favorite" onclick="addToFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>
             <% } %>
@@ -75,14 +75,16 @@
     removeFromFavorite = (id) => {
         alert('Artikel fjernet fra favoritter');
         fetch('/article/' + id + '/removeFavorite', {method: 'GET'});
-        favoriteBtn.childNodes[0].classList.remove('enabled-favorite');
+        favoriteBtn.childNodes[0].classList.remove('material-symbols-outlined');
+        favoriteBtn.childNodes[0].classList.add('material-symbols-rounded');
         favoriteBtn.onclick = () => addToFavorite(id);
     }
 
     addToFavorite = (id) => {
         alert('Artikel tilføjet til favoritter');
         fetch('/article/' + id + '/favorite', {method: 'GET'});
-        favoriteBtn.childNodes[0].classList.add('enabled-favorite');
+        favoriteBtn.childNodes[0].classList.add('material-symbols-outlined');
+        favoriteBtn.childNodes[0].classList.remove('material-symbols-rounded');
         favoriteBtn.onclick = () => removeFromFavorite(id);
     }
 
