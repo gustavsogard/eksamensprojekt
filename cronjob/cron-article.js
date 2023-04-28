@@ -12,8 +12,7 @@ const apiKey = require('../keys.json')
 
 
 const MAX_DESCRIPTION_LENGTH = 255;
-let imgCount = 0
-
+let count1, count2 
 const categoriesORG = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 const categoriesAI = ['dmoz%2FBusiness', 'news/Arts_and_Entertainment', 'dmoz', 'news%2FHealth', 'dmoz%2FScience', 'dmoz%2FSports', 'news%2FTechnology']
 var job = new CronJob(
@@ -41,7 +40,7 @@ var job = new CronJob(
                             } 
                             // hvis den ikke eksisterer bliver den blot sat til null. 
                         } else {
-                            description = null;
+                            description = 'Ingen beskrivelse';
                         }
     
                     const dataKeys = {
@@ -54,7 +53,7 @@ var job = new CronJob(
                         published_at: data.articles[i].publishedAt,
                         category: j+2// 
                     }
-                    ArticleDownload(dataKeys)
+                   count1 =  await ArticleDownload(dataKeys)
                 }
                 
             }))
@@ -65,9 +64,7 @@ var job = new CronJob(
             .then((async data => {
                 for (let i = 0; i < 2; i++) {
                     let description = data.articles.results[i].description;
-                    if(data.articles.results[i].image){
-                        imgCount++
-                    }
+
                     // tjekker om description eksisterer, altså den ikke er null
                     if (description) {
                         // hvis den eksisterer, tjekker om den er længere end 255, som er vores max
@@ -90,13 +87,13 @@ var job = new CronJob(
                         published_at: data.articles.results[i].publishedAt,
                         category: j+2// 
                       }
-                     ArticleDownload(dataKeys)
+                     count2 =  await ArticleDownload(dataKeys)
                 }
                 
             }))
         }
 
-        console.log('CRONJOB DONE');
+        console.log('CRONJOB DONE ' + (count1 + count2) + ' Articles run through SQL');
       
     }
     ,

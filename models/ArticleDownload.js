@@ -1,6 +1,9 @@
 // definerer max karakterer, for vores database
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
+const cronjob = require('../cronjob/cron-article')
+var count = 0
+
 // Define the articles class and its methods
 function ArticleDownload(obj) {
     const connection = new Connection(config);
@@ -29,6 +32,7 @@ function ArticleDownload(obj) {
                     published_at: TYPES.VarChar,
                     category: TYPES.Int
                 };
+                count++
                         
                 
 
@@ -61,7 +65,7 @@ function ArticleDownload(obj) {
                 
                 // Handle the completion of the request
                 request.on('requestCompleted', () => {
-                    resolve(response);
+                    resolve(count);
                 });
 
                 // Execute the SQL query
@@ -75,3 +79,4 @@ function ArticleDownload(obj) {
 }
 
 module.exports = ArticleDownload;
+
