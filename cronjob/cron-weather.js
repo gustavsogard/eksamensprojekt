@@ -6,7 +6,7 @@ var job = new CronJob(
     async function() {
         Weather('truncate_tables');
         await fetch(`https://api.open-meteo.com/v1/forecast?latitude=55.68&longitude=12.52&daily=weathercode,sunrise,sunset,temperature_2m_max,temperature_2m_min&past_days=31&timezone=Europe%2FBerlin`)
-        .then((response) => response.json())           
+        .then((response) => response.json())
         .then((data => {
             console.log("running data")
             for (let i = 0; i < 31; i++) {

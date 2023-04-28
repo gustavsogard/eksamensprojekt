@@ -269,7 +269,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     margin: 20px 0px 35px;
-    min-height: 200px;
+    min-height: 300px;
     display: flex;
     flex-wrap: wrap;
     align-items:flex-end;
