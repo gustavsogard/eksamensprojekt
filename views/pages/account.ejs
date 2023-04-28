@@ -1,68 +1,27 @@
 <%- include ("../partials/header.ejs") %>
-<div class="container">
-    <div class="row justify-content-center" style="margin-top: 40px">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header" style="text-align: center; font-weight: 600">Update account</div>
-                <% if (error) { %>
-                    <div class="alert alert-danger" role="alert">
-                        <%= error %>
-                    </div>
-                <% } %>
-                <div class="card-body">
 
-                    <form class="form-horizontal" method="POST" action="/account">
-
-                        <div class="form-group">
-                            <label for="name" class="cols-sm-2 control-label">New Name</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="name" id="name" placeholder="Enter your Name" value="<%= user.name %>" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="cols-sm-2 control-label">New Email</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-envelope fa" aria-hidden="true"></i></span>
-                                    <input type="text" class="form-control" name="email" id="email" placeholder="Enter your Email" value="<%= user.email %>"/>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="password" class="cols-sm-2 control-label">New Password</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="Enter your Password" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="confirm" class="cols-sm-2 control-label">Confirm New Password</label>
-                            <div class="cols-sm-10">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-lock fa-lg" aria-hidden="true"></i></span>
-                                    <input type="password" class="form-control" name="confirm" id="confirm" placeholder="Confirm your Password" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-primary btn-lg btn-block login-button">Update</button>
-                        </div>
-                    </form>
-                    <form class="form-horizontal" method="GET" action="/account/delete" onsubmit="return confirm('Er du sikker?')">
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-danger btn-lg btn-block">Delete your account</button>
-                        </div>
-                    </form>
+<div class="profile-view" style="margin-top: 60px">
+    <p class="h2">Din profil</p>
+    <div>
+        <div class="inner-header" style="display: flex; flex-wrap: wrap">
+            <% if (error) { %>
+                <div class="alert alert-danger" role="alert" style="width: 100%; margin-top: 20px">
+                    <%= error %>
                 </div>
-
-            </div>
+            <% } %>
+            <form id="update-form" class="update-form" method="POST" action="/account">
+                <input class="form-input profile-input" name="name" type="name" placeholder="Nyt navn">
+                <input class="form-input profile-input" name="email" type="email" placeholder="Ny e-mail">
+                <input class="form-input profile-input" name="password" type="password" placeholder="Nyt kodeord">
+                <input class="form-input profile-input" name="confirm" type="password" placeholder="Bekræft kodeord">
+                <button class="btn btn-primary" style="width: 100%; margin-top: 10px">Opdatér</button>
+            </form>
         </div>
+        <form method="GET" action="/account/delete" onsubmit="return confirm('Er du sikker?')">
+            <div class="form-group">
+                <button type="submit" class="btn btn-danger btn-lg btn-block">Delete your account</button>
+            </div>
+        </form>
     </div>
 </div>
 
