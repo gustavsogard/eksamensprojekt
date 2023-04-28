@@ -1,5 +1,8 @@
 <%- include ("../partials/header.ejs") %>
+
 <% if(article){ %>
+   <% let published = article.published_at.slice(0,10) %>
+    
 <div class="left-side" style="max-width: 800px; padding: 40px 80px">
     
     <div class="article-picture" style="height: 300px; background-image: url(<%= article.image %>)">
@@ -13,7 +16,7 @@
             <p class="h3">Skrevet af: <%= article.author %></p>
         </div>
         <div style="text-align:right">
-            <p class="h3"><%= article.published_at %></p>
+            <p class="h3"><%= published %></p>
             <p class="h3"><%= article.source %></p>
         </div>
     </div>
