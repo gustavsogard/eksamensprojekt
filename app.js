@@ -31,8 +31,11 @@ app.use('/', weather)
 const user = require('./routes/user.route');
 app.use('/', user);
 
-const favorites = require('./routes/favorites.route')
-app.use('/', favorites)
+const favorites = require('./routes/favorites.route');
+app.use('/', favorites);
+
+const categories = require('./routes/categories.route')
+app.use('/', categories)
 
 app.listen(port, () => {
     console.log(`Running on port: ${port}`);

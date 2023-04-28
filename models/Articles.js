@@ -76,6 +76,42 @@ function Articles(operation, obj) {
                             page: TYPES.Int
                         }
                         break;
+                    case 'get12ByCategoryId':
+                        query = `
+                            SELECT
+                                *
+                            FROM
+                                articles
+                            WHERE category_id = @category_id
+                            ORDER BY published_at DESC
+                            OFFSET @page * 12 ROWS
+                            FETCH FIRST 12 ROWS ONLY
+                        `;
+                        parameters = {
+                            page: TYPES.Int,
+                            category_id: TYPES.Int
+                        }
+                        break;
+                    case 'getFavorite12ByUserId':
+                        query = `
+                            SELECT
+                                articles.*
+                            FROM
+                                articles
+                            JOIN favorite_articles
+                                ON articles.id = favorite_articles.article_id
+                                AND favorite_articles.user_id = @user_id
+                            WHERE
+                                favorite_articles.user_id = @user_id
+                            ORDER BY published_at DESC
+                            OFFSET @page * 12 ROWS
+                            FETCH FIRST 12 ROWS ONLY
+                        `;
+                        parameters = {
+                            page: TYPES.Int,
+                            user_id: TYPES.Int
+                        }
+                        break;
                     default:
                         console.log('No operation specified');
                         reject(new Error('No operation specified'));

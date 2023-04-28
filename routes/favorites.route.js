@@ -18,5 +18,4 @@ router.route('/favorites/categories/:id/removeFavorite')
         favoritesController.removeFavoriteCategory(req, res);
     })
 
-
 module.exports = router;

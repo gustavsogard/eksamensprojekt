@@ -1,6 +1,7 @@
 <%- include ("../partials/header.ejs") %>
 
 <% let articleLarge = articles.shift() %>
+<% categories = categories.filter(category => category.added_to_favorite == 1) %>
 
 <div id="view" class="main">
     <div id="news" class="left-side">
@@ -103,10 +104,20 @@
                     <% }) %>
                 </div>
             </div>
-            <div style="display: flex; justify-content: center">
+            <div style="display: flex; justify-content: center; margin-bottom: 40px;">
                 <a href="/weather"><button class="btn btn-secondary">Se alt om vejr</button></a>
             </div>
         </div>
+        <% if (categories.length > 0) { %>
+        <div>
+            <p class="h2">Favoritkategorier</p>
+            <div class="time-weather-container" style="display: block;">
+                <% categories.forEach(category => { %>
+                    <a href="/category/<%= category.id %>"><button class="btn btn-secondary" style="margin: 10px;"><%= category.name %></button></a>
+                <% }) %>
+            </div>
+        </div>
+        <% } %>
     </div>
 </div>
 </div>
