@@ -60,12 +60,12 @@
             <p class="h2">Vejr</p>
             <div class="time-weather-container" style="margin-bottom: 10px">
                 <div class="current-weather">
-                    <div class="weather-inner">
+                    <div class="weather-inner" style="flex-wrap: wrap">
                         <span class="material-symbols-rounded" id="weatherIcon"><%= getCorrectIcon(weather_forecast[0].weathercode) %></span>
                         <p id="currentWeather"><%= weather_forecast[0].degrees %> &#8451</p>
-                    </div>
-                    <div>
-                        <p class="info-timestamp" id="weatherLocation">København</p>
+                        <div>
+                            <p class="info-timestamp" id="weatherLocation">København</p>
+                        </div>
                     </div>
                 </div>
                 <div class="sun-div">
