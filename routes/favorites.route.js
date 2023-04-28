@@ -13,4 +13,10 @@ router.route('/favorites/categories/:id/addFavorite')
         favoritesController.addFavoriteCategory(req, res);
     })
 
+router.route('/favorites/categories/:id/removeFavorite')
+    .get((req, res) => {
+        favoritesController.removeFavoriteCategory(req, res);
+    })
+
+
 module.exports = router;

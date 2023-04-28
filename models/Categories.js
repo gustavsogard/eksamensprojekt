@@ -20,10 +20,27 @@ function Categories(operation, obj) {
                 // Set up the SQL query and parameters based on the specified operation
                 switch (operation) {
                     case 'getAll':
-                        query = `SELECT * FROM categories`;
+                        query = `SELECT 
+                                    categories.*,
+                                    CASE WHEN favorite_categories.category_id IS NOT NULL THEN 1 ELSE 0 END as added_to_favorite
+                                FROM categories
+                                LEFT JOIN favorite_categories
+                                    ON categories.id = favorite_categories.category_id
+                                    AND favorite_categories.user_id = @user_id
+                        `;
+                        parameters = {
+                            user_id: TYPES.Int
+                        }
                         break;
                     case 'addFavorite':
                         query = 'INSERT INTO favorite_categories (user_id, category_id) SELECT @user_id, @category_id WHERE NOT EXISTS (SELECT user_id, category_id FROM favorite_categories WHERE user_id = @user_id AND category_id = @category_id)';
+                        parameters = {
+                            user_id: TYPES.Int,
+                            category_id: TYPES.Int
+                        };
+                        break;
+                    case 'removeFavorite':
+                        query = 'DELETE FROM favorite_categories WHERE user_id = @user_id AND category_id = @category_id';
                         parameters = {
                             user_id: TYPES.Int,
                             category_id: TYPES.Int
