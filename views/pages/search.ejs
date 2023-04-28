@@ -1,0 +1,54 @@
+<%- include ("../partials/header.ejs") %>
+
+<div id="view" class="main">
+    <div id="news" class="left-side" style="max-width: 800px;">
+        <h2 style="text-align: center;">Søgeresultater</h2>
+        <% if (articles.length > 0) { %>
+            <% articles.forEach(article => { %>
+            <div class="article-large">
+                <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= article.image %>');">
+                    <div class="inner-banner">
+                        <div class="banner-text">
+                            <p class="banner-title" id="bannerTitle"><%= article.title %></p>
+                            <p class="banner-publisher" id="bannerPublisher"> <%= article.source %></p>
+                        </div>
+                        <div class="banner-btn-section">
+                            <a href="/article/<%= article.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <% }) %>
+            <div class="inner-header">
+                <button class="btn btn-secondary" id="loadMore">Indlæs flere</button>
+            </div>
+        <% } else { %>
+            <p>Ingen artikler matcher din søgning.</p>
+        <% } %>
+    </div>
+</div>
+
+<script>
+    
+
+
+    removeFromFavoriteCategory = (id) => {
+        let favorite_btn = document.getElementById('favorite_btn_' + id)
+        alert('Kategori fjernet fra favoritter');
+        fetch('/favorites/categories/' + id + '/removeFavorite', {method: 'GET'});
+        favorite_btn.childNodes[0].classList.remove('material-symbols-outlined');
+        favorite_btn.childNodes[0].classList.add('material-symbols-rounded');
+        favorite_btn.onclick = () => addToFavoriteCategory(id);
+    }
+
+    addToFavoriteCategory = (id) => {
+        let favorite_btn = document.getElementById('favorite_btn_' + id)
+        alert('Kategori tilføjet til favoritter');
+        fetch('/favorites/categories/' + id + '/addFavorite', {method: 'GET'});
+        favorite_btn.childNodes[0].classList.add('material-symbols-outlined');
+        favorite_btn.childNodes[0].classList.remove('material-symbols-rounded');
+        favorite_btn.onclick = () => removeFromFavoriteCategory(id);
+    }
+</script>
+
+<%- include ("../partials/footer.ejs") %>

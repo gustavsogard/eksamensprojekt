@@ -37,6 +37,9 @@ app.use('/', favorites);
 const categories = require('./routes/categories.route')
 app.use('/', categories)
 
+const search = require('./routes/search.route');
+app.use('/', search);
+
 app.listen(port, () => {
     console.log(`Running on port: ${port}`);
 });
