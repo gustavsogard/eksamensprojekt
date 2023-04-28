@@ -57,7 +57,7 @@ var job = new CronJob(
                 }
                 
             }))
-            let fetchUrl2 = `https://www.newsapi.ai/api/v1/article/getArticles?query=%7B%22%24query%22%3A%7B%22%24and%22%3A%5B%7B%22categoryUri%22%3A%22${categoriesAI[j]}%22%7D%2C%7B%22lang%22%3A%22eng%22%7D%5D%7D%2C%22%24filter%22%3A%7B%22forceMaxDataTimeWindow%22%3A%2231%22%7D%7D&resultType=articles&articlesSortBy=date&articlesCount=10&includeArticleImage=true&includeArticleLinks=true&articleBodyLen=-1&apiKey=${apiKey.API.AI}`
+            let fetchUrl2 = `https://www.newsapi.ai/api/v1/article/getArticles?query=%7B%22%24query%22%3A%7B%22%24and%22%3A%5B%7B%22categoryUri%22%3A%22${categoriesAI[j]}%22%7D%2C%7B%22locationUri%22%3A%22http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FUnited_States%22%7D%2C%7B%22dateStart%22%3A%222023-04-21%22%2C%22dateEnd%22%3A%222023-04-28%22%2C%22lang%22%3A%22eng%22%7D%5D%7D%2C%22%24filter%22%3A%7B%22startSourceRankPercentile%22%3A0%2C%22endSourceRankPercentile%22%3A40%2C%22isDuplicate%22%3A%22skipDuplicates%22%7D%7D&resultType=articles&articlesSortBy=date&articlesCount=10&includeArticleBody=false&includeArticleEventUri=false&includeArticleImage=true&articleBodyLen=-1&apiKey=${apiKey.API.AI}`
             
             await fetch(fetchUrl2)
             .then((response) => response.json())           
@@ -93,7 +93,7 @@ var job = new CronJob(
             }))
         }
 
-        console.log('CRONJOB DONE ' + (count1 + count2) + ' Articles run through SQL');
+        console.log('CRONJOB DONE ' + count1 + count2 + ' Articles run through SQL');
       
     }
     ,

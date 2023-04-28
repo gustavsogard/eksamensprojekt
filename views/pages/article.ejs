@@ -1,6 +1,7 @@
 <%- include ("../partials/header.ejs") %>
-
+<% if(article){ %>
 <div class="left-side" style="max-width: 800px; padding: 40px 80px">
+    
     <div class="article-picture" style="height: 300px; background-image: url(<%= article.image %>)">
         <% if (article.article_read == 1) { %>
             <div class="article-read">LÆST</div>
@@ -89,5 +90,13 @@
     }
 
 </script>
+<% } else { %>
+    <div style="display: flex; align-items: center; flex-direction: column;" >
+        <h1>Ups!</h1>
+    <h2>404 not found!</h2>
+    <h3>Denne artikel eksisterer vidst/vist ikke</h3>
+    </div>
+    
+<% } %>
 
 <%- include ("../partials/footer.ejs") %>
