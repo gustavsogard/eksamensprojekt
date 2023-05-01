@@ -40,3 +40,8 @@ exports.removeFavoriteArticle = async (req, res) => {
         return;
     }
 }
+
+exports.loadMoreArticles = async (req, res) => {
+    const articles = await Articles('get12', {page: req.params.page});
+    res.json(articles);
+}

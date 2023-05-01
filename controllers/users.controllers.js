@@ -1,5 +1,6 @@
 const Users = require('../models/User.js');
 const { validateLogIn, validateCreate, validateUpdate } = require('../helpers/validators/users.validator');
+const bcrypt = require('bcrypt');
 
 exports.renderLogIn = (req, res) => {
     if (req.session.loggedin) {
@@ -12,7 +13,7 @@ exports.renderLogIn = (req, res) => {
 exports.logIn = async (req, res) => {
     const reqUser = req.body;
     const dbUser = await Users('get', {email: reqUser.email});
-    const validate = validateLogIn(reqUser, dbUser);
+    const validate = await validateLogIn(reqUser, dbUser);
 
     if (validate !== true) {
         res.render('../views/pages/login.ejs', {error: validate});
@@ -41,6 +42,8 @@ exports.createUser = async (req, res) => {
         res.render('../views/pages/register.ejs', {error: validate});
         return;
     } else {
+        const salt = await bcrypt.genSalt(10);
+        reqUser.password = await bcrypt.hash(reqUser.password, salt);
         Users('create', {name: reqUser.name, email: reqUser.email, password: reqUser.password});
         res.redirect('/login');
     }

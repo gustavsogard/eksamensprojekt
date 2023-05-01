@@ -1,4 +1,6 @@
-exports.validateLogIn = (reqUser, dbUser) => {
+const bcrypt = require('bcrypt');
+
+exports.validateLogIn = async (reqUser, dbUser) => {
     if (reqUser.email === '' || reqUser.password === '') {
         return 'All fields are required';
     }
@@ -7,7 +9,7 @@ exports.validateLogIn = (reqUser, dbUser) => {
         return 'Email does not exist';
     }
 
-    if (dbUser.password !== reqUser.password) {
+    if (!(await bcrypt.compare(reqUser.password, dbUser.password))) {
         return 'Incorrect password';
     }
 

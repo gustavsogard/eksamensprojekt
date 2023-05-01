@@ -28,4 +28,9 @@ router.route('/article/:id/removeFavorite')
       articlesController.removeFavoriteArticle(req, res);
     })
 
+router.route('/articles/loadmore/:page')
+    .get((req, res) => {
+      articlesController.loadMoreArticles(req, res);
+    })
+
 module.exports = router;
