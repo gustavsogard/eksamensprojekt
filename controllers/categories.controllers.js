@@ -13,3 +13,8 @@ exports.renderCategory = async (req, res) => {
 
     res.render('../views/pages/category.ejs', {articles: articles, categories: categories, category_id: req.params.id});
 }
+
+exports.loadMoreArticles = async (req, res) => {
+    const articles = await Articles('get12ByCategoryId', {category_id: req.params.id, page: req.params.page});
+    res.json(articles);
+}

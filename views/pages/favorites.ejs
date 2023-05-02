@@ -68,8 +68,6 @@
         let newArticles = await fetch('/favorites/loadmore/' + page)
             .then(res => res.json());
 
-        console.log(newArticles, page);
-
         newArticles.forEach(article => {
             // Add the article to the news element:
 

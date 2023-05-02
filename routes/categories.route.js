@@ -7,4 +7,9 @@ router.route('/category/:id')
         categoriesController.renderCategory(req, res);
     })
 
+router.route('/category/:id/loadmore/:page')
+    .get((req, res) => {
+        categoriesController.loadMoreArticles(req, res);
+    })
+
 module.exports = router;
