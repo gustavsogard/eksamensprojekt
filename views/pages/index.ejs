@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <div class="articles-small">
+        <div class="articles-small" id="articles-small">
             <% for (let i = 0; i < 3; i++) { %>
                 <div class="article-row">
                 <% for (let j = 0; j < 3; j++) { %>
@@ -124,6 +124,43 @@
 </div>
 
 <script>
+
+
+let loadMore = document.getElementById('loadMore');
+let articlesSmall = document.getElementById('articles-small');
+let page = 1;
+
+loadMore.addEventListener('click', async () => {
+    let articles = document.querySelectorAll('.article-div');
+    let newArticles = await fetch('/articles/loadmore/' + page)
+        .then(res => res.json());
+
+    if (newArticles.length === 12) {
+        for (let i = 0; i < 4; i++) {
+            let row = document.createElement('div');
+            row.classList.add('article-row');
+            for (let j = 0; j < 3; j++) {
+                let article = document.createElement('div');
+                article.classList.add('article-div');
+                article.innerHTML = `
+                    <div class="article-picture" style="background-image: url('${newArticles[j+(i*3)].image}')"></div>
+                    <div class="article-content">
+                        <div class="article-title" style="cursor:default">${newArticles[j+(i*3)].title}</div>
+                        <div class="article-misc">
+                            <p class="article-publisher">${newArticles[j+(i*3)].source}</p>
+                            <a href="/article/${newArticles[j+(i*3)].id}"><button class="btn btn-primary readMoreBtn">Læs mere</button></a>
+                        </div>
+                    </div>
+                `;
+                row.appendChild(article);
+            }
+            articlesSmall.appendChild(row);
+        }
+    }
+
+    page++;
+});
+
     // Denne funktion opdaterer timestampet for applikationen ved load af forsiden
 function updateTimestamp() {
     let today = new Date();

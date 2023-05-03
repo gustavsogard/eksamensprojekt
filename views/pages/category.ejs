@@ -5,38 +5,40 @@
 <% categories = categories.filter(category => category.added_to_favorite == 1) %>
 
 <div id="view" class="main">
-    <div id="news" class="left-side">
-        <h1 class="h2">Category: <%= category.name %></p>
-        <div class="article-large">
-            <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= articleLarge.image %>');">
-                <div class="inner-banner">
-                    <div class="banner-text">
-                        <p class="banner-title" id="bannerTitle"><%= articleLarge.title %></p>
-                        <p class="banner-publisher" id="bannerPublisher"> <%= articleLarge.source %></p>
-                    </div>
-                    <div class="banner-btn-section">
-                        <a href="/article/<%= articleLarge.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
+    <div class="left-side">
+        <div id="news">
+            <h1 class="h2">Category: <%= category.name %></p>
+            <div class="article-large">
+                <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= articleLarge.image %>');">
+                    <div class="inner-banner">
+                        <div class="banner-text">
+                            <p class="banner-title" id="bannerTitle"><%= articleLarge.title %></p>
+                            <p class="banner-publisher" id="bannerPublisher"> <%= articleLarge.source %></p>
+                        </div>
+                        <div class="banner-btn-section">
+                            <a href="/article/<%= articleLarge.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="articles-small">
-            <% for (let i = 0; i < 3; i++) { %>
-                <div class="article-row">
-                <% for (let j = 0; j < 3; j++) { %>
-                    <div class="article-div"> 
-                        <div class="article-picture" style="background-image: url('<%= articles[j+(i*3)].image %>')"></div> 
-                        <div class="article-content">
-                            <div class="article-title" style="cursor:default"><%= articles[j+(i*3)].title %></div>
-                            <div class="article-misc">
-                                <p class="article-publisher"><%= articles[j+(i*3)].source %></p>
-                                <a href="/article/<%= articles[j+(i*3)].id %>"><button class="btn btn-primary readMoreBtn">Læs mere</button></a>
+            <div class="articles-small" id="articles-small">
+                <% for (let i = 0; i < 3; i++) { %>
+                    <div class="article-row">
+                    <% for (let j = 0; j < 3; j++) { %>
+                        <div class="article-div"> 
+                            <div class="article-picture" style="background-image: url('<%= articles[j+(i*3)].image %>')"></div> 
+                            <div class="article-content">
+                                <div class="article-title" style="cursor:default"><%= articles[j+(i*3)].title %></div>
+                                <div class="article-misc">
+                                    <p class="article-publisher"><%= articles[j+(i*3)].source %></p>
+                                    <a href="/article/<%= articles[j+(i*3)].id %>"><button class="btn btn-primary readMoreBtn">Læs mere</button></a>
+                                </div>
                             </div>
                         </div>
+                    <% } %>
                     </div>
                 <% } %>
-                </div>
-            <% } %>
+            </div>
         </div>
         <div class="inner-header">
             <button class="btn btn-secondary" id="loadMore">Indlæs flere</button>
@@ -57,5 +59,45 @@
 </div>
 </div>
 </div>
+
+<script>
+
+let loadMore = document.getElementById('loadMore');
+let articlesSmall = document.getElementById('articles-small');
+let page = 1;
+
+loadMore.addEventListener('click', async () => {
+    let articles = document.querySelectorAll('.article-div');
+    let newArticles = await fetch('/category/<%= category_id %>/loadmore/' + page)
+        .then(res => res.json());
+
+    if (newArticles.length === 12) {
+        for (let i = 0; i < 4; i++) {
+            let row = document.createElement('div');
+            row.classList.add('article-row');
+            for (let j = 0; j < 3; j++) {
+                let article = document.createElement('div');
+                article.classList.add('article-div');
+                article.innerHTML = `
+                    <div class="article-picture" style="background-image: url('${newArticles[j+(i*3)].image}')"></div>
+                    <div class="article-content">
+                        <div class="article-title" style="cursor:default">${newArticles[j+(i*3)].title}</div>
+                        <div class="article-misc">
+                            <p class="article-publisher">${newArticles[j+(i*3)].source}</p>
+                            <a href="/article/${newArticles[j+(i*3)].id}"><button class="btn btn-primary readMoreBtn">Læs mere</button></a>
+                        </div>
+                    </div>
+                `;
+                row.appendChild(article);
+            }
+            articlesSmall.appendChild(row);
+        }
+    }
+
+    page++;
+});
+
+</script>
+
 
 <%- include ("../partials/footer.ejs") %>

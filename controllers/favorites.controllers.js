@@ -31,3 +31,8 @@ exports.removeFavoriteCategory = async (req, res) => {
         return
     }
 }
+
+exports.loadMoreFavorites = async (req, res) => {
+    const articles = await Articles('getFavorite12ByUserId', {user_id: req.session.user.id, page: req.params.page});
+    res.json(articles);
+}

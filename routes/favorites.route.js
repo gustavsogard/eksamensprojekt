@@ -18,4 +18,9 @@ router.route('/favorites/categories/:id/removeFavorite')
         favoritesController.removeFavoriteCategory(req, res);
     })
 
+router.route('/favorites/loadmore/:page')
+    .get((req, res) => {
+        favoritesController.loadMoreFavorites(req, res);
+    })
+
 module.exports = router;
