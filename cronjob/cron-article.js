@@ -71,13 +71,9 @@ var job = new CronJob(
                         if (description.length > MAX_DESCRIPTION_LENGTH) {
                             // skærer description ned til at passe til vores maks
                             description = description.slice(0, MAX_DESCRIPTION_LENGTH);
-                        } 
-                        // hvis den ikke eksisterer bliver den blot sat til null. 
-                    } else{
-                        description = 'Ingen beskrivelse'
-                    }
+                        }}
     
-                    const dataKeys = {
+                    let dataKeys = {
                         title: data.articles.results[i].title,
                         description: description,
                         author: data.articles.results[i].author,
@@ -87,13 +83,20 @@ var job = new CronJob(
                         published_at: data.articles.results[i].publishedAt,
                         category: j+2// 
                       }
+                    // looper gennem keys, for at tjekke om der nogle steder der mangler data
+                    for (const key in dataKeys){
+                    // hvis der mangler data, bliver det sat til 'Mangler data' i stedet for <null>    
+                        if(!dataKeys[key]){
+                            dataKeys[key] = 'Mangler data'
+                        }
+                    }
                      count2 =  await ArticleDownload(dataKeys)
                 }
                 
             }))
         }
-
-        console.log('CRONJOB DONE ' + count1 + count2 + ' Articles run through SQL');
+        let total = count1+count2
+        console.log('CRONJOB DONE ' + total + ' Articles run through SQL');
       
     }
     ,
