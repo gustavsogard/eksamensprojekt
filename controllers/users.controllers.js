@@ -78,7 +78,7 @@ exports.deleteUser = async (req, res) => {
         return;
     }
 
-    await Users('delete', {email: req.session.user.email});
+    await Users('delete', {id: req.session.user.id});
     req.session.destroy();
     res.redirect('/register');
 }

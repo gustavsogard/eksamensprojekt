@@ -42,9 +42,15 @@ function Users(operation, obj) {
                         };
                         break;
                     case 'delete':
-                        query = 'DELETE FROM users WHERE email = @email';
+                        query = `
+                            DELETE FROM comments WHERE user_id = @id;
+                            DELETE FROM favorite_categories WHERE user_id = @id;
+                            DELETE FROM favorite_articles WHERE user_id = @id;
+                            DELETE FROM read_articles WHERE user_id = @id;
+                            DELETE FROM users WHERE id = @id;
+                        `;
                         parameters = {
-                            email: TYPES.VarChar
+                            id: TYPES.Int
                         };
                         break;
                     default:
