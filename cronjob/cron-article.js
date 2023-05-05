@@ -2,15 +2,6 @@ var CronJob = require('cron').CronJob;
 const ArticleDownload = require('../models/ArticleDownload')
 const apiKey = require('../keys.json')
 
-// der er en foreign key constraint, der gør at vi ikke kan lægge kategorierne ind
-/* 
-           triggerUncaughtException(err, true /* fromPromise );
-           ^
-
-           RequestError: The INSERT statement conflicted with the FOREIGN KEY constraint "FK__articles__catego__0E391C95". The conflict occurred in database "CBS", table "dbo.categories", column 'id'.
-*/
-
-
 const MAX_DESCRIPTION_LENGTH = 255;
 let count1, count2 
 const categoriesORG = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
@@ -25,10 +16,6 @@ var job = new CronJob(
             .then((response) => response.json())           
             .then((async data => {
                 for (let i = 0; i < 2; i++) {
-                    /* if(data.status == 'error'){
-                        continue
-                    } */
-                    // gør så vi ikke får artikler uden billeder
 
                         let description = data.articles[i].description;
                         // tjekker om description eksisterer, altså den ikke er null
