@@ -427,6 +427,7 @@ body {
 
 #weatherIcon {
     font-size: 50px;
+    margin-top: 15px;
 }
 
 .weather-inner {
@@ -439,6 +440,7 @@ body {
 #currentWeather {
     font-size: 30px;
     font-weight: 600;
+    margin-bottom: 10px;
 }
 
 .sun-div-inner {
