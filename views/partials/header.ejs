@@ -31,9 +31,9 @@
                 <a href="/" style="all:unset; cursor:pointer; display:flex; justify-content: center; align-items: center; font-size: 20px; color:#363A55; font-weight: 600;"><span class='material-symbols-rounded' style="color: #363A55; font-size: 32px; margin-right: 10px;">newspaper</span>NowNews</a>
             </div>
             <div>
-                <form class="inner-header" action="/search" method="POST">
-                    <input name="query" class="form-input searchbar" type="text" placeholder="Søgeord (fx. 'World Cup')">
-                    <input name="publisher" class="form-input searchbar" type="text" placeholder="Udgiver (fx. 'forbes.com')">
+                <form class="inner-header" action="/search" method="POST" onsubmit="return checkSearchParams()">
+                    <input name="query" id="search-query" class="form-input searchbar" type="text" placeholder="Søgeord (fx. 'World Cup')">
+                    <input name="publisher" id="search-publisher" class="form-input searchbar" type="text" placeholder="Udgiver (fx. 'forbes.com')">
                     <button class="btn btn-secondary search-btn"><span style="font-size:18px" class="material-symbols-rounded">search</span></button>
                 </form>
             </div>
@@ -53,3 +53,15 @@
           <% } %>
         </div>
       </div>
+
+      <script>
+        function checkSearchParams() {
+          const query = document.getElementById('search-query').value;
+          const publisher = document.getElementById('search-publisher').value;
+          if (query.length < 1 && publisher.length < 1) {
+            alert('Du skal udfylde mindst et af søgefelterne');
+            return false;
+          }
+          return true;
+        }
+      </script>

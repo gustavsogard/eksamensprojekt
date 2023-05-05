@@ -40,7 +40,6 @@ exports.createUser = async (req, res) => {
 
     if (validate !== true) {
         res.render('../views/pages/register.ejs', {error: validate});
-        return;
     } else {
         const salt = await bcrypt.genSalt(10);
         reqUser.password = await bcrypt.hash(reqUser.password, salt);
