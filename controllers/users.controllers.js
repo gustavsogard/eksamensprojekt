@@ -1,6 +1,6 @@
 const Users = require('../models/User.js');
 const { validateLogIn, validateCreate, validateUpdate } = require('../helpers/validators/users.validator');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.renderLogIn = (req, res) => {
     if (req.session.loggedin) {

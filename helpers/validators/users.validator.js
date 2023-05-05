@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 exports.validateLogIn = async (reqUser, dbUser) => {
     if (reqUser.email === '' || reqUser.password === '') {
