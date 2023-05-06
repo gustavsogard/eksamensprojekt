@@ -6,4 +6,3 @@ exports.renderWeather = async (req, res) => {
   const historical = await Weather('getWeatherHistorical');
   res.render('../views/pages/weather.ejs', { forecast: forecast, historical: historical, getCorrectIcon});
 };
-
