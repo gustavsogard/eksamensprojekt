@@ -1,5 +1,6 @@
 var CronJob = require('cron').CronJob;
-const Weather = require('../models/Weather')
+const Weather = require('../models/Weather');
+const fetch = require('node-fetch');
 
 var job = new CronJob(
     '*/15 * * * * *',
