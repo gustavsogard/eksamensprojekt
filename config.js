@@ -1,16 +1,18 @@
+require('dotenv').config();
+
 const config = {
-    server: 'cbs-gustav.database.windows.net', // better stored in an app setting such as process.env.DB_SERVER
+    server: process.env.DATABASE_URL,
     authentication: {
         type: 'default',
         options: {
-            userName: 'gustav',
-            password: 'KrMksas6dpiCo5F9'
+            userName: process.env.USERNAME,
+            password: process.env.PASSWORD
         }
     },
     options: {
         encrypt: true,
         port: 1433,
-        database: 'CBS'
+        database: process.env.DATABASE
     }
 };
 

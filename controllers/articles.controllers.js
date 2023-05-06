@@ -14,7 +14,6 @@ exports.renderArticle = async (req,res) => {
 }
 
 exports.readArticle = async (req, res) => {
-    console.log('trying to add to read...');
     if (!req.session.loggedin) {
         return;
     } else {
