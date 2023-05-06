@@ -11,6 +11,6 @@ For at køre applikationen skal du:
 2. Sørge for at du har installeret alle moduler med 'npm install' i terminalen
 3. Køre serveren med 'node app.js' i terminalen
 
-Udarbejdet af @Aman3612, @TroelsPR, @thel22ab, @gustavsogard
-Maj 2023
-Copenhagen Business School, HA(it.)
+Udarbejdet af @Aman3612, @TroelsPR, @thel22ab, @gustavsogard.
+Maj 2023.
+Copenhagen Business School, HA(it.).
