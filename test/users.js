@@ -17,7 +17,7 @@ describe('Users', () => {
             let result = helper.validateCreate(user, undefined);
 
             // VERIFY: Med chai kan vi nu teste om resultatet er det forventede
-            expect(result).to.equal('All fields are required');
+            expect(result).to.equal('Alle felter er påkrævet');
         });
 
         it('All fields should be required (2)', () => {
@@ -33,7 +33,7 @@ describe('Users', () => {
             let result = helper.validateCreate(user, undefined);
 
             // VERIFY: Med chai kan vi nu teste om resultatet er det forventede
-            expect(result).to.equal('All fields are required');
+            expect(result).to.equal('Alle felter er påkrævet');
         });
 
         it('Password and confirm password should be equal', () => {
@@ -49,7 +49,7 @@ describe('Users', () => {
             let result = helper.validateCreate(user, undefined);
 
             // VERIFY: Med chai kan vi nu teste om resultatet er det forventede
-            expect(result).to.equal('Passwords do not match');
+            expect(result).to.equal('Kodeordene er ikke ens');
         });
 
         it('Email should not already exist', () => {
@@ -61,7 +61,7 @@ describe('Users', () => {
             let result = helper.validateCreate(user, dbUser);
 
             // VERIFY: Med chai kan vi nu teste om resultatet er det forventede
-            expect(result).to.equal('Email already exists');
+            expect(result).to.equal('Email findes allerede');
         });
 
         it('Password should be at least 6 characters', () => {
@@ -77,7 +77,7 @@ describe('Users', () => {
             let result = helper.validateCreate(user, undefined);
 
             // VERIFY: Med chai kan vi nu teste om resultatet er det forventede
-            expect(result).to.equal('Password must be at least 6 characters');
+            expect(result).to.equal('Kodeordet skal være mindst 6 tegn');
         });
 
         it('If all requirements are filled, the user should be verified', () => {
