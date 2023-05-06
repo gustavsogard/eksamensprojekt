@@ -4,32 +4,32 @@
     <div class="left-side" style="max-width: 800px;">
         <div id="news">
         <p class="h2">Favoritter</p>
-        <% if (articles.length > 0) { %>
-            <% articles.forEach(article => { %>
-            <div class="article-large">
-                <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= article.image %>');">
-                    <div class="inner-banner">
-                        <div class="banner-text">
-                            <p class="banner-title" id="bannerTitle"><%= article.title %></p>
-                            <p class="banner-publisher" id="bannerPublisher"> <%= article.source %></p>
-                        </div>
-                        <div class="banner-btn-section">
-                            <a href="/article/<%= article.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
+        <% if (user) { %>
+            <% if (articles.length > 0) { %>
+                <% articles.forEach(article => { %>
+                <div class="article-large">
+                    <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= article.image %>');">
+                        <div class="inner-banner">
+                            <div class="banner-text">
+                                <p class="banner-title" id="bannerTitle"><%= article.title %></p>
+                                <p class="banner-publisher" id="bannerPublisher"> <%= article.source %></p>
+                            </div>
+                            <div class="banner-btn-section">
+                                <a href="/article/<%= article.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <% }) %>
-        <% } else { %>
-            <% if (user) { %> 
-                <p>Du har ingen favoritartikler.</p>
+                <% }) %>
+                <div class="inner-header">
+                    <button class="btn btn-secondary" id="loadMore" <%= user ? "" : "hidden" %>>Indlæs flere</button>
+                </div>
             <% } else { %>
-                <p>Log ind for at se dine favoritartikler.</p>
+                <p>Du har ingen favoritartikler.</p>
             <% } %>
+        <% } else { %>
+            <p>Log ind for at se dine favoritartikler.</p>
         <% } %>
-        </div>
-        <div class="inner-header">
-            <button class="btn btn-secondary" id="loadMore" <%= user ? "" : "hidden" %>>Indlæs flere</button>
         </div>
     </div>
     <div class="right-side" style="display: flex; justify-content: center">
