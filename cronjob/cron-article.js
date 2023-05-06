@@ -1,5 +1,6 @@
 var CronJob = require('cron').CronJob;
-const ArticleDownload = require('../models/ArticleDownload')
+const ArticleDownload = require('../models/ArticleDownload');
+require('dotenv').config();
 
 const MAX_DESCRIPTION_LENGTH = 255;
 let count1, count2 
