@@ -59,11 +59,19 @@
 
 <script>
 
-    let loadMore = document.getElementById('loadMore');
+    
     let news = document.getElementById('news');
     let page = 1;
 
-    loadMore.addEventListener('click', async () => {
+    if (<%= articles.length %> > 0) {
+        let loadMore = document.getElementById('loadMore');
+
+        if (<%= articles.length %> < 12) {
+            loadMore.style.visibility='hidden';
+        }
+
+        
+        loadMore.addEventListener('click', async () => {
         let articles = document.querySelectorAll('.article-div');
         let newArticles = await fetch('/favorites/loadmore/' + page)
             .then(res => res.json());
@@ -91,9 +99,10 @@
         });
 
         page++;
-    });
+        });
+    }
 
-    removeFromFavoriteCategory = (id) => {
+    const removeFromFavoriteCategory = (id) => {
         let favorite_btn = document.getElementById('favorite_btn_' + id)
         alert('Kategori fjernet fra favoritter');
         fetch('/favorites/categories/' + id + '/removeFavorite', {method: 'GET'});
@@ -102,7 +111,7 @@
         favorite_btn.onclick = () => addToFavoriteCategory(id);
     }
 
-    addToFavoriteCategory = (id) => {
+    const addToFavoriteCategory = (id) => {
         let favorite_btn = document.getElementById('favorite_btn_' + id)
         alert('Kategori tilføjet til favoritter');
         fetch('/favorites/categories/' + id + '/addFavorite', {method: 'GET'});
