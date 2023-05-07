@@ -5,7 +5,7 @@ const config = {
     authentication: {
         type: 'default',
         options: {
-            userName: process.env.USERNAME,
+            userName: process.env.DB_NAME,
             password: process.env.PASSWORD
         }
     },
