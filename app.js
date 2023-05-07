@@ -22,6 +22,7 @@ app.use(session({
 // Denne middleware funktion sørger for at ejs filerne altid har adgang til user objektet
 app.use(function(req, res, next) {
   res.locals.user = req.session.user;
+  res.locals.currentPage = req.path;
   next();
 });
 

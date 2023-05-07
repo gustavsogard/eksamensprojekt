@@ -15,12 +15,12 @@
     <div class="nav">
       <div class="nav-item">
           <a href="/" id="home-btn">
-            <button><span class="material-symbols-rounded active-nav">home</span></button>
+            <button><span class="material-symbols-rounded<%= currentPage === '/' ? ' active-nav': ''%>">home</span></button>
           </a>
       </div>
       <div class="nav-item">
           <a href="/favorites" id="favorite-btn">
-            <button><span class="material-symbols-rounded">favorite</span></button>
+            <button><span class="material-symbols-rounded<%= currentPage === '/favorites' ? ' active-nav': ''%>">favorite</span></button>
           </a>
       </div>
     </div>
