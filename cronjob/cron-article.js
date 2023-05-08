@@ -75,7 +75,7 @@ var job = new CronJob(
                     for (const key in dataKeys){
                     // hvis der mangler data, bliver det sat til 'Mangler data' i stedet for <null>    
                         if(!dataKeys[key]){
-                            dataKeys[key] = 'Mangler data'
+                            dataKeys[key] = 'Ingen data'
                         }
                     }
                      count2 =  await ArticleDownload(dataKeys)
