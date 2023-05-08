@@ -59,7 +59,6 @@
 
 <script>
 
-    
     let news = document.getElementById('news');
     let page = 1;
 
@@ -67,10 +66,9 @@
         let loadMore = document.getElementById('loadMore');
 
         if (<%= articles.length %> < 12) {
-            loadMore.style.visibility='hidden';
+            loadMore.style.visibility = 'hidden';
         }
 
-        
         loadMore.addEventListener('click', async () => {
         let articles = document.querySelectorAll('.article-div');
         let newArticles = await fetch('/favorites/loadmore/' + page)
@@ -95,7 +93,6 @@
                 </div>
             `;
             news.appendChild(articleDiv);
-            console.log(article, articleDiv);
         });
 
         page++;
