@@ -32,7 +32,7 @@ exports.addFavoriteCategory = async (req, res) => {
 
 exports.removeFavoriteCategory = async (req, res) => {
     if (!req.session.loggedin) {
-        console.log("You are not logged in"); 
+        return;
     // hvis brugeren er logget ind bliver artiklen fjernet fra favoritterne
     } else {
         await Categories('removeFavorite', {user_id: req.session.user.id, category_id: req.params.id});
