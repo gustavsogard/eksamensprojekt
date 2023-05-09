@@ -9,7 +9,7 @@ exports.renderArticle = async (req,res) => {
     if (req.session.loggedin) {
         user_id = req.session.user.id;
     }
-    // article bliver defineret som det der bliver returneret fra Articles modellen, når operationen 'getByID' bliver sendt.
+    // article bliver defineret som den artikel der bliver returneret fra Articles modellen, når operationen 'getByID' bliver sendt.
     // Der bliver også sendt id med, fra params, for at søge på artikel id'et. 
     const article = await Articles('getById', {id: req.params.id, user_id: user_id});
     // der bliver hentet kommentarer der hører til artiklen
