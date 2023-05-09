@@ -26,7 +26,7 @@ exports.addFavoriteCategory = async (req, res) => {
     // hvis brugeren er logget ind bliver artiklen tilføjet til favoritterne
     } else {
         await Categories('addFavorite', {user_id: req.session.user.id, category_id: req.params.id});
-        return
+        return;
     }
 }
 
@@ -36,7 +36,7 @@ exports.removeFavoriteCategory = async (req, res) => {
     // hvis brugeren er logget ind bliver artiklen fjernet fra favoritterne
     } else {
         await Categories('removeFavorite', {user_id: req.session.user.id, category_id: req.params.id});
-        return
+        return;
     }
 }
 // loadMoreArticles funktionen bliver lavet
