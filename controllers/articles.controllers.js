@@ -20,33 +20,26 @@ exports.renderArticle = async (req,res) => {
 
 // read article funktionen bliver lavet
 exports.readArticle = async (req, res) => {
-    // hvis der ikke eksister en session skal der ikke ske noget
-    if (!req.session.loggedin) {
-        return;
     // hvis der eksister en session bliver de læste artikler hentet
-    } else {
+    if (req.session.loggedin) {
         await Articles('read', {article_id: req.params.id, user_id: req.session.user.id});
         return;
     }
 }
+
 // addFavoriteArticle funktionen bliver lavet
 exports.addFavoriteArticle = async (req, res) => {
-    // hvis der ikke eksister en session skal der ikke ske noget
-    if (!req.session.loggedin) {
-        return;
-    // hvis der eksister en session bliver den valgte artikel tilføjet til favoritter
-    } else {
+    // hvis der eksisterer en session bliver den valgte artikel tilføjet til favoritter
+    if (req.session.loggedin) {
         await Articles('addFavorite', {article_id: req.params.id, user_id: req.session.user.id});
         return;
     }
 }
+
 // removeFavoriteArticle funktionen bliver lavet
 exports.removeFavoriteArticle = async (req, res) => {
-    // hvis der ikke eksister en session skal der ikke ske noget
-    if (!req.session.loggedin) {
-        return;
     // hvis der eksister en session bliver den valgte artikel fjernet fra favoritter
-    } else {
+    if (req.session.loggedin) {
         await Articles('removeFavorite', {article_id: req.params.id, user_id: req.session.user.id});
         return;
     }

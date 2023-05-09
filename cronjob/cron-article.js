@@ -47,7 +47,7 @@ var job = new CronJob(
                     // looper gennem keys, for at tjekke om der nogle steder der mangler data
                     for (const key in dataKeys){
                         // hvis der mangler data, bliver det sat til 'Ingen data' i stedet for <null>    
-                        if(!dataKeys[key]){
+                        if(!dataKeys[key] && key != 'image'){
                             dataKeys[key] = 'Ingen data'
                         }
                     }
@@ -84,8 +84,8 @@ var job = new CronJob(
                       }
                     // looper gennem keys, for at tjekke om der nogle steder der mangler data
                     for (const key in dataKeys){
-                    // hvis der mangler data, bliver det sat til 'Mangler data' i stedet for <null>    
-                        if(!dataKeys[key]){
+                    // hvis der mangler data, bliver det sat til 'Ingen data' i stedet for <null>    
+                        if(!dataKeys[key] && key != 'image'){
                             dataKeys[key] = 'Ingen data'
                         }
                     }

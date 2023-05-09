@@ -88,8 +88,8 @@ function Articles(operation, obj) {
                             FETCH FIRST 12 ROWS ONLY
                         `;
                         parameters = {
-                            page: TYPES.Int,
-                            category_id: TYPES.Int
+                            category_id: TYPES.Int,
+                            page: TYPES.Int
                         }
                         break;
                     case 'getFavorite12ByUserId':

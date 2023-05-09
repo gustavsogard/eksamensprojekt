@@ -9,6 +9,9 @@ exports.renderCategory = async (req, res) => {
     if (req.session.loggedin) {
         user_id = req.session.user.id;
     }
+
+    // hvis id ikke er et tal stopper funktionen
+
     // article bliver defineret som de 12 artikler der bliver returneret fra Articles modellen, når operationen 'get12ByCategoryId' bliver sendt.
     // Der bliver også sendt id med, fra params, for at søge på artikel id'et. 
     const articles = await Articles('get12ByCategoryId', {category_id: req.params.id, page: 0});

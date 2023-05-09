@@ -20,21 +20,16 @@ exports.renderFavorites = async (req, res) => {
 }
 // addFavoriteCategory funktionen bliver lavet
 exports.addFavoriteCategory = async (req, res) => {
-    // hvis brugeren ikke er logget ind, bliver der logget til konsollen, og i EJS filen bliver det vist på siden 
-    if (!req.session.loggedin) {
-        console.log("You are not logged in") 
     // hvis brugeren er logget ind bliver artiklen tilføjet til favoritterne
-    } else {
+    if (req.session.loggedin) {
         await Categories('addFavorite', {user_id: req.session.user.id, category_id: req.params.id});
         return;
     }
 }
 
 exports.removeFavoriteCategory = async (req, res) => {
-    if (!req.session.loggedin) {
-        return;
     // hvis brugeren er logget ind bliver artiklen fjernet fra favoritterne
-    } else {
+    if (req.session.loggedin) {
         await Categories('removeFavorite', {user_id: req.session.user.id, category_id: req.params.id});
         return;
     }
