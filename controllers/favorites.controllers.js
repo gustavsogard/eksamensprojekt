@@ -16,19 +16,19 @@ exports.renderFavorites = async (req, res) => {
 
 exports.addFavoriteCategory = async (req, res) => {
     if (!req.session.loggedin) {
-        console.log("You are not logged in") //Find anden løsning her
+        return;
     } else {
         await Categories('addFavorite', {user_id: req.session.user.id, category_id: req.params.id});
-        return
+        return;
     }
 }
 
 exports.removeFavoriteCategory = async (req, res) => {
     if (!req.session.loggedin) {
-        console.log("You are not logged in"); //Find anden løsning her
+        return;
     } else {
         await Categories('removeFavorite', {user_id: req.session.user.id, category_id: req.params.id});
-        return
+        return;
     }
 }
 
