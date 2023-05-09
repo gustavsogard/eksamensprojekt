@@ -4,18 +4,18 @@ const config = require('../config');
 const cronjob = require('../cronjob/cron-article')
 var count = 0
 
-// Define the articles class and its methods
+// Definerer articleDownload funktion
 function ArticleDownload(obj) {
     const connection = new Connection(config);
-    // Return a Promise for asynchronous handling
+    // Return et promise
     return new Promise((resolve, reject) => {
-        // Set up a database connection
+        // Laver database connection
         connection.on('connect', (err) => {
             if (err) {
                 console.log(err);
                 reject(err);
             } else {
-                // Set up the SQL query and parameters based on the specified operation
+                // SQL query der sætter artikler in i articles, og tjekker om der er duplikater ved at kigge på URL
                 query = `INSERT INTO articles (title, description, source, author, url, image, published_at, category_id)
                         SELECT @title, @description, @source, @author, @url, @image, @published_At, @category
                         WHERE NOT EXISTS
@@ -36,7 +36,7 @@ function ArticleDownload(obj) {
                         
                 
 
-                // Create a new Request object with the SQL query and parameters
+                // Laver en ny request
                 const request = new Request(query, (err) => {
                     if (err) {
                         console.log(err);
@@ -46,34 +46,33 @@ function ArticleDownload(obj) {
                     }
                 });
 
-                // Add the parameters to the Request object
+                // Tilføjer parametrene til requesten
                 Object.keys(parameters).forEach((name) => {
                     request.addParameter(name, parameters[name], obj[name]);
                 });
-
+                // definerer et tomt array for at kunne populere det med artikler
                 let response = [];
 
-                // Handle each row of the response
+                // tilføjer data for hvert row, Det bliver sat ind i response, som kan blive eksekveret . 
                 request.on('row', (columns) => {
                     let article = {};
                     columns.forEach((column) => {
                         article[column.metadata.colName] = column.value;
-                        console.log(column.value);
                     })
                     response.push(article)
                 });
                 
-                // Handle the completion of the request
+                // Færdiggørerer requestet
                 request.on('requestCompleted', () => {
                     resolve(count);
                 });
 
-                // Execute the SQL query
+                // eksekverer SQL query
                 connection.execSql(request);
             }
         });
 
-        // Connect to the database
+        // Connecter til databasen
         connection.connect();
     });
 }
