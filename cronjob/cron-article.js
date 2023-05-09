@@ -2,11 +2,14 @@ var CronJob = require('cron').CronJob;
 const ArticleDownload = require('../models/ArticleDownload');
 require('dotenv').config();
 const fetch = require('node-fetch');
-
+// definerer en maks længde for desciption
 const MAX_DESCRIPTION_LENGTH = 255;
+// Definerer et count for den ene API og den anden API, for at tjekke hvor mange artikler der blev sendt til mdoel
 let count1, count2 
+// definerer kategorierne for hvert API der skal bruges til athente data
 const categoriesORG = ['business', 'entertainment', 'general', 'health', 'science', 'sports', 'technology']
 const categoriesAI = ['dmoz%2FBusiness', 'news/Arts_and_Entertainment', 'dmoz', 'news%2FHealth', 'dmoz%2FScience', 'dmoz%2FSports', 'news%2FTechnology']
+// laver et nyt cronjob
 var job = new CronJob(
     '*/30 * * * * *',
     async function() {
@@ -30,7 +33,7 @@ var job = new CronJob(
                         } else {
                             description = 'Ingen beskrivelse';
                         }
-    
+                    // laver et objekt med dataene fra artiklen
                     const dataKeys = {
                         title: data.articles[i].title,
                         description: description,
@@ -41,6 +44,14 @@ var job = new CronJob(
                         published_at: data.articles[i].publishedAt,
                         category: j+2// 
                     }
+                    // looper gennem keys, for at tjekke om der nogle steder der mangler data
+                    for (const key in dataKeys){
+                        // hvis der mangler data, bliver det sat til 'Ingen data' i stedet for <null>    
+                        if(!dataKeys[key]){
+                            dataKeys[key] = 'Ingen data'
+                        }
+                    }
+                // count bliver returneret af promiseset i article download modellen
                    count1 =  await ArticleDownload(dataKeys)
                 }
                 
@@ -78,12 +89,15 @@ var job = new CronJob(
                             dataKeys[key] = 'Ingen data'
                         }
                     }
+                    // count bliver returneret af promiseset i article download modellen
                      count2 =  await ArticleDownload(dataKeys)
                 }
                 
             }))
         }
+        // lægger det totale count sammen
         let total = count1+count2
+        // logger at cronjobbet er færdigt, og hvor mange artikler der blev sendt til modellenen. 
         console.log('CRONJOB DONE ' + total + ' Articles run through SQL');
       
     }
