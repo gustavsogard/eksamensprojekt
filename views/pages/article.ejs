@@ -1,10 +1,12 @@
 <%- include ("../partials/header.ejs") %>
 
+<!-- Tjekker om artiklen eksisterer, else-statementet ligger i bunden-->
 <% if(article){ %>
    <% let published = article.published_at.slice(0,10) %>
     
 <div class="left-side" style="max-width: 800px; padding: 40px 80px">
     
+    <!-- Viser artikelbillede og læsestatus -->
     <div class="article-picture" style="height: 300px; background-image: url(<%= article.image %>)">
         <% if (article.article_read == 1) { %>
             <div class="article-read">LÆST</div>
@@ -12,19 +14,23 @@
     </div>
     <div class="article-metadata">
         <div style="width: 60%;">
+            <!-- Viser artikelens titel og forfatter -->
             <p class="h2" id="article-title" style="margin-bottom: 15px"><%= article.title %></p>
             <p class="h3">Skrevet af: <%= article.author %></p>
         </div>
         <div style="text-align:right">
+            <!-- Viser offentliggørelsesdato og kilde -->
             <p class="h3"><%= published %></p>
             <p class="h3"><%= article.source %></p>
         </div>
     </div>
     <div class="article-content" style="margin-bottom: 20px">
+        <!-- Viser artikelindhold -->
         <p class="paragraph"><%= article.description %></p>
     </div>
     <div class="inner-header">
 
+        <!-- Viser favoritknappen, hvis brugeren er logget ind -->
         <% if (user) { %>
             <% if (article.added_to_favorite == 1) { %>
                 <button id="article-favorite" onclick="removeFromFavorite(<%= article.id %>)" style="all: unset"><span class="material-symbols-outlined article-favorite enabled-favorite">favorite</span></button>
@@ -33,6 +39,7 @@
             <% } %>
         <% } %>
 
+        <!-- Viser knap til at gå til artikel -->
         <a id="article-url" target="_blank">
             <button class="btn btn-primary">
                 Gå til artikel
@@ -40,8 +47,11 @@
         </a>
 
     </div>
+
+    <!-- Viser sektionen for kommentarer -->
     <div class="comments">
         <h3>Kommentarer</h3>
+        <!-- Tjekker om der er nogen kommentarer -->
         <% if (comments.length > 0) { %>
             <% comments.forEach(comment => { %>
                 <p class="h3"><%= comment.name %>: <span><%= comment.content %></span></p>
@@ -60,11 +70,12 @@
         <% } %>     
     </div>
 </div>
+<!-- Viser anbefalede artikler -->
 <div class="right-side" style="display: flex; justify-content: center">
     <div id="more-articles" class="articles-recommended"></div>
 </div>
 
-
+<!-- Script for at åbne artikel i nyt vindue, tilføje eller fjerne fra favoritter -->
 <script>
     let url = '<%= article.url %>';
     let linkTag = document.getElementById('article-url');
@@ -93,6 +104,7 @@
     }
 
 </script>
+<!-- Hvis artiklen ikke findes -->
 <% } else { %>
     <div style="display: flex; align-items: center; flex-direction: column;" >
         <h1>Ups!</h1>

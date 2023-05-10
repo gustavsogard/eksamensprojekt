@@ -44,8 +44,10 @@
                         <span style="display: flex; align-items: center; margin-left: 15px">
                         <% if (user) { %>
                             <% if (element.added_to_favorite == 1) { %>
+                                <!-- Knappen for at fjerne denne kategori fra favoritter -->
                                 <button id="favorite_btn_<%= element.id %>" onclick="removeFromFavoriteCategory(<%= element.id %>)" style="all: unset"><span class="material-symbols-outlined article-favorite">favorite</span></button>
                             <% } else { %>
+                                <!-- Knappen for at tilføje denne kategori til favoritter -->
                                 <button id="favorite_btn_<%= element.id %>" onclick="addToFavoriteCategory(<%= element.id %>)" style="all: unset"><span class="material-symbols-rounded article-favorite">favorite</span></button>
                             <% } %>
                         <% } %>
@@ -62,21 +64,23 @@
     let news = document.getElementById('news');
     let page = 1;
 
+    // Hvis der er artikler i favoritterne
     if (<%= articles.length %> > 0) {
         let loadMore = document.getElementById('loadMore');
 
+        // Hvis der er færre end 12 artikler, skjules knappen for at indlæse flere
         if (<%= articles.length %> < 12) {
             loadMore.style.visibility = 'hidden';
         }
 
+        // Eventlistener til knappen for at indlæse flere artikler
         loadMore.addEventListener('click', async () => {
         let articles = document.querySelectorAll('.article-div');
         let newArticles = await fetch('/favorites/loadmore/' + page)
             .then(res => res.json());
 
+        // Tilføjer de nye artikler til nyhedssektionen
         newArticles.forEach(article => {
-            // Add the article to the news element:
-
             let articleDiv = document.createElement('div');
             articleDiv.classList.add('article-large');
             articleDiv.innerHTML = `
@@ -99,6 +103,7 @@
         });
     }
 
+    // Funktion for at fjerne en kategori fra favoritter
     const removeFromFavoriteCategory = (id) => {
         let favorite_btn = document.getElementById('favorite_btn_' + id)
         alert('Kategori fjernet fra favoritter');
@@ -108,6 +113,7 @@
         favorite_btn.onclick = () => addToFavoriteCategory(id);
     }
 
+    // Funktion for at tilføje en kategori fra favoritter
     const addToFavoriteCategory = (id) => {
         let favorite_btn = document.getElementById('favorite_btn_' + id)
         alert('Kategori tilføjet til favoritter');

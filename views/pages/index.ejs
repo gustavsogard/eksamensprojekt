@@ -1,12 +1,17 @@
 <%- include ("../partials/header.ejs") %>
 
+<!-- Fjerner det første element fra articles-arrayet og sætter det ind i en variabel -->
 <% let articleLarge = articles.shift() %>
+
+<!-- Fjerner kategorier, der ikke er tilføjet som favorit -->
 <% categories = categories.filter(category => category.added_to_favorite == 1) %>
 
 <div id="view" class="main">
     <div id="news" class="left-side">
+        <!-- Hvis brugeren er logget ind, vises deres navn -->
         <% if (user) { %>
             <h1 class="h2">Velkommen <%= user.name %></p>
+        <!-- Ellers vises en standardtekst -->        
         <% } else { %>
             <p class="h2">Velkommen gæst</p>
         <% } %> 
@@ -46,6 +51,7 @@
         </div>
     </div>
     <div class="right-side">
+        <!-- Tid og vejr -->
         <div>
             <p class="h2">Tid</p>
             <div class="time-weather-container">
@@ -110,6 +116,7 @@
         </div>
         <% if (categories.length > 0) { %>
         <div>
+            <!-- Favoritkategorier -->
             <p class="h2">Favoritkategorier</p>
             <div class="time-weather-container" style="display: block;">
                 <% categories.forEach(category => { %>
@@ -129,6 +136,7 @@ let loadMore = document.getElementById('loadMore');
 let articlesSmall = document.getElementById('articles-small');
 let page = 1;
 
+// Funktion til at indlæse flere artikler
 loadMore.addEventListener('click', async () => {
     let articles = document.querySelectorAll('.article-div');
     let newArticles = await fetch('/articles/loadmore/' + page)
@@ -160,7 +168,7 @@ loadMore.addEventListener('click', async () => {
     page++;
 });
 
-    // Denne funktion opdaterer timestampet for applikationen ved load af forsiden
+// Denne funktion opdaterer timestampet for applikationen ved load af forsiden
 function updateTimestamp() {
     let today = new Date();
 
@@ -187,6 +195,7 @@ function updateDate() {
     document.getElementById('date').textContent = `${day}, ${date}. ${month} ${year}`;
 }
 
+// Denne funktion opdaterer tidszonen for applikationen ved load af forsiden
 function updateTimezone() {
     let today = new Date();
 

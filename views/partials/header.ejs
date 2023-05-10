@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" href="/public/favicon.png">
   </head>
 <body>
+  <!-- Container-elementet indeholder alt indholdet på siden-->
   <div class="container">
     <div class="nav">
       <div class="nav-item">
@@ -24,7 +25,9 @@
           </a>
       </div>
     </div>
+    <!-- View-elementet indeholder hovedindholdet på siden-->
     <div class="view">
+      <!-- Header-elementet indeholder logo og søgefunktion og brugeroptiner-->
       <div class="header">
         <div class="inner-header">
             <div class="logo">
@@ -39,11 +42,13 @@
             </div>
         </div>
         <div class="user" id="user-info">
+          <!-- Checker om en bruger er logget ind, hvis ja, giver den adgang til at ændre profil og logge ud -->
           <% if (user) { %>
             <p><%= user.name %></p>
             <a href="/account"><span class='material-symbols-rounded' style="color: black">person</span></a>
             <a href="/logout"><span class='material-symbols-rounded' style="color: black">logout</span></a>
           <% } else { %>
+            <!-- Ellers kan man registere sig eller logge ind -->
             <a href='/register'>
                 <button class='btn btn-primary'>Opret bruger</button>
             </a>
@@ -55,6 +60,7 @@
       </div>
 
       <script>
+        // Funktionen checkSearchParams() sikrer at mindst et søgefelt er udfyldt, når der søges
         function checkSearchParams() {
           const query = document.getElementById('search-query').value;
           const publisher = document.getElementById('search-publisher').value;

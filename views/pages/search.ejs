@@ -3,6 +3,7 @@
 <div id="view" class="main">
     <div class="left-side" style="max-width: 800px;">
         <div id="news">
+            <!-- Søgeresultater -->
         <h2 style="text-align: center;">Søgeresultater</h2>
         <% if (articles.length > 0) { %>
             <% articles.forEach(article => { %>
@@ -22,9 +23,11 @@
             <% }) %>
             </div>
             <div class="inner-header">
+                <!-- Knappen for at indlæse mere -->
                 <button class="btn btn-secondary" id="loadMore">Indlæs flere</button>
             </div>
         <% } else { %>
+            <!-- Ingen artikler fundet besked -->
             <p>Ingen artikler matcher din søgning.</p>
         <% } %>
     </div>
@@ -47,8 +50,8 @@
         let newArticles = await fetch(`/search/loadmore/${page}/<%= query ? query: '%20' %>/<%= publisher ? publisher: '%20' %>`)
             .then(res => res.json());
 
+        // Tilføj artiklen til nyhederne:
         newArticles.forEach(article => {
-            // Add the article to the news element:
 
             let articleDiv = document.createElement('div');
             articleDiv.classList.add('article-large');

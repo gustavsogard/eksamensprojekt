@@ -7,27 +7,33 @@
 <div id="view" class="main">
     <div class="left-side">
         <div id="news">
+            <!-- Viser kategorinavnet -->
             <h1 class="h2">Category: <%= category.name %></p>
             <div class="article-large">
                 <div class="banner" id="banner" style="background-image: linear-gradient(to bottom, transparent 30%, #363a558b 60%, #363a55e1 90%), url('<%= articleLarge.image %>');">
                     <div class="inner-banner">
                         <div class="banner-text">
+                            <!-- Viser artiklens titel og kilde -->
                             <p class="banner-title" id="bannerTitle"><%= articleLarge.title %></p>
                             <p class="banner-publisher" id="bannerPublisher"> <%= articleLarge.source %></p>
                         </div>
                         <div class="banner-btn-section">
+                            <!-- Knappen fører til hele artiklen -->
                             <a href="/article/<%= articleLarge.id %>"><button class="btn btn-secondary" id="bannerLink">Læs hele artiklen</button></a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Viser tre rækker med tre mindre artikler hver -->
             <div class="articles-small" id="articles-small">
                 <% for (let i = 0; i < 3; i++) { %>
                     <div class="article-row">
                     <% for (let j = 0; j < 3; j++) { %>
                         <div class="article-div"> 
+                            <!-- Viser artiklens billede og titel -->
                             <div class="article-picture" style="background-image: url('<%= articles[j+(i*3)].image %>')"></div> 
                             <div class="article-content">
+                                <!-- Viser artiklens kilde og knap til hele artiklen -->
                                 <div class="article-title" style="cursor:default"><%= articles[j+(i*3)].title %></div>
                                 <div class="article-misc">
                                     <p class="article-publisher"><%= articles[j+(i*3)].source %></p>
@@ -41,6 +47,7 @@
             </div>
         </div>
         <div class="inner-header">
+            <!-- Knappen fører til flere artikler -->
             <button class="btn btn-secondary" id="loadMore">Indlæs flere</button>
         </div>
     </div>
@@ -49,6 +56,7 @@
         <div>
             <p class="h2">Favoritkategorier</p>
             <div class="time-weather-container" style="display: block;">
+                <!-- Viser alle kategorier, som er tilføjet som favoritter -->
                 <% categories.forEach(category => { %>
                     <a href="/category/<%= category.id %>"><button class="btn btn-secondary" style="margin: 10px;"><%= category.name %></button></a>
                 <% }) %>
@@ -62,6 +70,7 @@
 
 <script>
 
+// Indlæser flere artikler ved klik på knap
 let loadMore = document.getElementById('loadMore');
 let articlesSmall = document.getElementById('articles-small');
 let page = 1;
@@ -72,6 +81,7 @@ loadMore.addEventListener('click', async () => {
         .then(res => res.json());
 
     if (newArticles.length === 12) {
+        // Viser fire rækker med tre mindre artikler hver
         for (let i = 0; i < 4; i++) {
             let row = document.createElement('div');
             row.classList.add('article-row');

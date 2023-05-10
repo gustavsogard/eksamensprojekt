@@ -13,6 +13,7 @@
     <div class="credential-wrapper">
         <div class="credential-container">
             <a href="/" style="all:unset; cursor:pointer; display:flex; justify-content: center; align-items: center; font-size: 20px; color:#363A55; font-weight: 600; margin-bottom: 40px"><span class='material-symbols-rounded' style="color: #363A55; font-size: 32px; margin-right: 10px;">newspaper</span>NowNews</a>
+            <!--Opret bruger-->
             <p class="h2 credential-title">Opret bruger</p>
             <% if (error) { %>
                 <div class="alert-text">
@@ -20,12 +21,18 @@
                 </div>
             <% } %>
             <form class="credential-form" method="POST">
+                <!--Email-->
                 <input class="form-input" name="email" type="email" placeholder="E-mail" required>
+                <!--Fulde navn-->
                 <input class="form-input" name="name" type="text" placeholder="Dit fulde navn" required>
+                <!--Password-->
                 <input class="form-input" name="password" type="password" placeholder="Kodeord" required>
+                <!--Bekræft password-->
                 <input class="form-input" name="confirm" type="password" placeholder="Bekræft kodeord" required>
+                <!--Opret bruger knap-->
                 <button class="btn btn-primary" style="width: 100%; margin-top: 10px">Opret bruger</button>
             </form>
+            <!--Link med "har du allerede en bruger?"-->
             <p class="credential-info">Har du allerede en bruger? <a class="link" href="/login">Log ind</a></p>
         </div>
     </div>

@@ -2,21 +2,28 @@
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
+<!-- container for vejr -->
 <div class="weather-container">
+  <!-- container for prognose -->
   <div class="forecast-container">
     <div class="forecast-header">
       <p class="h2">Forecast</p>
       <span class="material-symbols-outlined">thermostat</span>
     </div>
     <div class="forecast-small-containers">
+      <!-- forecast -->
       <% forecast.forEach(forecastData => { %>
         <div class="forecast-div">
+          <!-- forecast navn-->
           <p class="forecast-day-name" style="font-weight: 600;"><%= forecastData.date.toString().slice(0,11) %></p>
+          <!-- forecast temp-->
           <p class="forecast-day-temp"><%= forecastData.degrees %>&#8451</p>
+          <!-- forecast icon -->
           <span class="material-symbols-outlined weatherIcon"><%= getCorrectIcon(forecastData.weathercode) %></span>
         </div>
       <% }) %>
     </div>
+    <!-- forecast link til at læse mere-->
     <div class="forecast-readMore">
       <a href="https://www.yr.no/nb/v%C3%A6rvarsel/daglig-tabell/2-2618425/Danmark/Region%20Hovedstaden/K%C3%B8benhavn/K%C3%B8benhavn" target="_blank">
         <button class="forecast-btn btn btn-primary">Se mere</button>

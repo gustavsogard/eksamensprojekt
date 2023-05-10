@@ -5,10 +5,13 @@
     <div>
         <div class="inner-header" style="display: flex; flex-wrap: wrap">
             <% if (error) { %>
+                <!-- Hvis der er en fejl, vises denne besked -->
                 <div class="alert alert-danger" role="alert" style="width: 100%; margin-top: 20px">
                     <%= error %>
                 </div>
             <% } %>
+
+             <!-- Formular til opdatering af brugeroplysninger -->
             <form id="update-form" class="update-form" method="POST" action="/account">
                 <input class="form-input profile-input" name="name" type="name" placeholder="Nyt navn">
                 <input class="form-input profile-input" name="email" type="email" placeholder="Ny e-mail">
@@ -17,6 +20,8 @@
                 <button class="btn btn-primary" style="width: 100%; margin-top: 10px">Opdatér</button>
             </form>
         </div>
+
+        <!-- Formular til sletning af bruger, inkl. en onsubmit alert der confirmer om brugeren vil slette sin bruger -->
         <form method="GET" action="/account/delete" onsubmit="return confirm('Er du sikker?')">
             <div class="form-group">
                 <button type="submit" class="btn btn-danger btn-lg btn-block">Slet bruger</button>
