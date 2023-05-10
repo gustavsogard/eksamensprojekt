@@ -28,10 +28,11 @@ function Users(operation, obj) {
                         };
                         break;
                     case 'update':
-                        query = 'UPDATE users SET name = @name, email = @email, password = @password WHERE email = @email';
+                        query = 'UPDATE users SET name = @name, email = @email, password = @password WHERE email = @prevEmail';
                         parameters = {
                             name: TYPES.VarChar,
                             email: TYPES.VarChar,
+                            prevEmail: TYPES.VarChar,
                             password: TYPES.VarChar
                         };
                         break;
