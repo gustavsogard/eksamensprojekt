@@ -1,7 +1,9 @@
+//Henter relevante moduler samt ArticleDownload modellen
 var CronJob = require('cron').CronJob;
 const ArticleDownload = require('../models/ArticleDownload');
 require('dotenv').config();
 const fetch = require('node-fetch');
+
 // definerer en maks længde for desciption
 const MAX_DESCRIPTION_LENGTH = 255;
 // Definerer et count for den ene API og den anden API, for at tjekke hvor mange artikler der blev sendt til mdoel
@@ -15,12 +17,13 @@ var job = new CronJob(
     async function() {
         console.log('STARTING CRONJOB');
         for (let j = 0; j < categoriesORG.length; j++) {
+            //Definerer URL til API'et og fetcher fra API'et. Laver response til JavaScript objekt.
             let fetchUrl = `https://newsapi.org/v2/top-headlines?country=us&category=${categoriesORG[j]}&apiKey=${process.env.API_KEY_ORG}`
             await fetch(fetchUrl)
             .then((response) => response.json())           
             .then((async data => {
                 for (let i = 0; i < 2; i++) {
-
+                        //Henter 2 artikler fra hver kategori
                         let description = data.articles[i].description;
                         // tjekker om description eksisterer, altså den ikke er null
                         if (description) {
@@ -42,7 +45,7 @@ var job = new CronJob(
                         url: data.articles[i].url,
                         image: data.articles[i].urlToImage,
                         published_at: data.articles[i].publishedAt,
-                        category: j+2// 
+                        category: j+2 //Lægger 2 til så det stemmer overens med ID i databasen
                     }
                     // looper gennem keys, for at tjekke om der nogle steder der mangler data
                     for (const key in dataKeys){
@@ -52,10 +55,11 @@ var job = new CronJob(
                         }
                     }
                 // count bliver returneret af promiseset i article download modellen
-                   count1 =  await ArticleDownload(dataKeys)
+                   count1 = await ArticleDownload(dataKeys)
                 }
                 
             }))
+            //På samme måde som før hentes 2 artikler fra hver kategori - nu bare med et nyt API
             let fetchUrl2 = `https://www.newsapi.ai/api/v1/article/getArticles?query=%7B%22%24query%22%3A%7B%22%24and%22%3A%5B%7B%22categoryUri%22%3A%22${categoriesAI[j]}%22%7D%2C%7B%22locationUri%22%3A%22http%3A%2F%2Fen.wikipedia.org%2Fwiki%2FUnited_States%22%7D%2C%7B%22dateStart%22%3A%222023-04-21%22%2C%22dateEnd%22%3A%222023-04-28%22%2C%22lang%22%3A%22eng%22%7D%5D%7D%2C%22%24filter%22%3A%7B%22startSourceRankPercentile%22%3A0%2C%22endSourceRankPercentile%22%3A40%2C%22isDuplicate%22%3A%22skipDuplicates%22%7D%7D&resultType=articles&articlesSortBy=date&articlesCount=10&includeArticleBody=false&includeArticleEventUri=false&includeArticleImage=true&articleBodyLen=-1&apiKey=${process.env.API_KEY_AI}`
             
             await fetch(fetchUrl2)
@@ -105,5 +109,6 @@ var job = new CronJob(
     null,
     true
 );
+//Vi starter cron-jobbet
 job.start()
 
