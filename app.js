@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const session = require('express-session');
 
+//Definerer porten, serveren kører på
 const port = 4000;
 
 // Nu sætter vi view engine til ejs og gør public mappen tilgængelig på "/public"

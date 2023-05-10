@@ -1,3 +1,4 @@
+//Henter relevante Models
 const Categories = require('../models/Categories.js');
 const Articles = require('../models/Articles.js');
 

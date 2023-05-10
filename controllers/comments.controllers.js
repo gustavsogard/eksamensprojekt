@@ -1,4 +1,6 @@
+//Henter Comments modellen
 const Comments = require('../models/Comments.js');
+
 // createComment funktionen bliver lavet
 exports.createComment = async (req,res) => {
     // Comments modellen bliver kaldt med operationen 'create', som laver en ny kommentar. 

@@ -1,3 +1,4 @@
+//Henter artikel- og kommentarmodellerne
 const Articles = require('../models/Articles.js');
 const Comments = require('../models/Comments.js');
 
@@ -20,7 +21,7 @@ exports.renderArticle = async (req,res) => {
 
 // read article funktionen bliver lavet
 exports.readArticle = async (req, res) => {
-    // hvis der eksister en session bliver de læste artikler hentet
+    // hvis der eksister en session bliver de læste artikler hentet fra Article modellen
     if (req.session.loggedin) {
         await Articles('read', {article_id: req.params.id, user_id: req.session.user.id});
         return;

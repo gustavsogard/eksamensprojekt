@@ -1,3 +1,4 @@
+//Henter anvendte modeller
 const Articles = require('../models/Articles.js');
 const Categories = require('../models/Categories.js');
 
@@ -10,7 +11,7 @@ exports.renderCategory = async (req, res) => {
         user_id = req.session.user.id;
     }
 
-    // article bliver defineret som de 12 artikler der bliver returneret fra Articles modellen, når operationen 'get12ByCategoryId' bliver sendt.
+    // article bliver defineret som et objekt med de 12 artikler der bliver returneret fra Articles modellen, når operationen 'get12ByCategoryId' bliver sendt.
     // Der bliver også sendt id med, fra params, for at søge på artikel id'et. 
     const articles = await Articles('get12ByCategoryId', {category_id: req.params.id, page: 0});
     // Der bliver hentet alle kategorier fra categories og kategorierne som brugeren har sat som favoritter
