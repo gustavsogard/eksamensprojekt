@@ -98,8 +98,8 @@ exports.updateUser = async (req, res) => {
         //Ellers defineres en salt og adgangskoden hashes ved hjælp af bcrypt
         const salt = await bcrypt.genSalt(10);
         reqUser.password = await bcrypt.hash(reqUser.password, salt);
-        //Brugeren bliver opdateret i databasen med de nye oplysninger og den hashede adgangskode
-        await Users('update', {name: reqUser.name, email: reqUser.email, password: reqUser.password});
+        //Brugeren bliver opdateret i databasen med de nye oplysninger (og brugerens tidligere email) og den hashede adgangskode
+        await Users('update', {name: reqUser.name, email: reqUser.email, prevEmail: req.session.user.email, password: reqUser.password});
         //Brugeren gemmes i express-session
         req.session.user = await Users('get', {email: reqUser.email});
         //Siden genindlæses
