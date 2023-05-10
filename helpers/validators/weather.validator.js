@@ -1,5 +1,8 @@
+//Helper funktion der giver det korrekte icon til google Fonts baseret på weathercoden i vejr-api'et
 exports.getCorrectIcon = (weathercode) => {
+    //definerer en variabel der holder øje med vejr-information
     let symbol;
+    //Laver et switch-statment der angiver vejr-information baseret på weathercoden
     switch (weathercode) {
         case 0:
             symbol = 'clear_day';
@@ -31,5 +34,6 @@ exports.getCorrectIcon = (weathercode) => {
         default:
             symbol = 'rainy';
     }
+    //Returnerer vejr-informationen for den pågældende dag
     return symbol;
 }

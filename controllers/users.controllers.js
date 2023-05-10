@@ -60,7 +60,7 @@ exports.createUser = async (req, res) => {
     if (validate !== true) {
         res.render('../views/pages/register.ejs', {error: validate});
     } else {
-        //Hvis valideringen er godkendt oprettes et salt og brugerens password krypteres
+        //Hvis valideringen er godkendt oprettes et salt og brugerens password hashes
         const salt = await bcrypt.genSalt(10);
         reqUser.password = await bcrypt.hash(reqUser.password, salt);
         //Brugeren bliver oprettet i databasen ved hjælp af Users modellen
@@ -95,7 +95,10 @@ exports.updateUser = async (req, res) => {
         res.render('../views/pages/account.ejs', {error: validate});
         return;
     } else {
-        //Ellers bliver brugeren opdateret i databasen med de nye oplysninger
+        //Ellers defineres en salt og adgangskoden hashes ved hjælp af bcrypt
+        const salt = await bcrypt.genSalt(10);
+        reqUser.password = await bcrypt.hash(reqUser.password, salt);
+        //Brugeren bliver opdateret i databasen med de nye oplysninger og den hashede adgangskode
         await Users('update', {name: reqUser.name, email: reqUser.email, password: reqUser.password});
         //Brugeren gemmes i express-session
         req.session.user = await Users('get', {email: reqUser.email});

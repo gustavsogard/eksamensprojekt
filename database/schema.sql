@@ -1,3 +1,5 @@
+-- Her ses vores SQL-statements der opretter databasen. For overblik henvises til ERD-diagrammet i opgaven
+
 CREATE TABLE [users] (
   [id] integer NOT NULL IDENTITY(1,1) PRIMARY KEY,
   [name] nvarchar(255),
