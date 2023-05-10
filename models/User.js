@@ -1,14 +1,14 @@
-// Import the necessary modules
+// Importere nødvendige moduler
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 
-// Define the Users class and its methods
+// Definerer funktionen og metoden
 function Users(operation, obj) {
     const connection = new Connection(config);
 
-    // Return a Promise for asynchronous handling
+    // Returnere et Promise fra en asynkron handling
     return new Promise((resolve, reject) => {
-        // Set up a database connection
+        // Set up en database connection
         connection.on('connect', (err) => {
             if (err) {
                 console.log(err);
@@ -17,7 +17,7 @@ function Users(operation, obj) {
                 let query = '';
                 let parameters = {};
 
-                // Set up the SQL query and parameters based on the specified operation
+                // Set up SQL query og parameters baseret på specifik operation
                 switch (operation) {
                     case 'create':
                         query = 'INSERT INTO users (name, email, password) VALUES (@name, @email, @password)';
@@ -59,7 +59,7 @@ function Users(operation, obj) {
                         reject(new Error('No operation specified'));
                 }
 
-                // Create a new Request object with the SQL query and parameters
+                // Lav et nyt request object med SQL-query med parameters
                 const request = new Request(query, (err) => {
                     if (err) {
                         console.log(err);
@@ -69,14 +69,14 @@ function Users(operation, obj) {
                     }
                 });
 
-                // Add the parameters to the Request object
+                // Tilføj parameteres til request objectet
                 Object.keys(parameters).forEach((name) => {
                     request.addParameter(name, parameters[name], obj[name]);
                 });
 
                 let response = undefined;
 
-                // Handle each row of the response
+                // Handler hvert row af responsen
                 request.on('row', (columns) => {
                     response = {};
                     columns.forEach((column) => {
@@ -84,20 +84,20 @@ function Users(operation, obj) {
                     });
                 });
 
-                // Handle the completion of the request
+                // Handler den færdige request
                 request.on('requestCompleted', () => {
                     resolve(response);
                 });
 
-                // Execute the SQL query
+                // Execute SQL-query'en
                 connection.execSql(request);
             }
         });
 
-        // Connect to the database
+        // Connecter til database
         connection.connect();
     });
 }
 
-// Export the Users class
+// Exportere klassen
 module.exports = Users;

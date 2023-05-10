@@ -1,4 +1,4 @@
-// definerer max karakterer, for vores database
+// Definerer max karakterer, for vores database
 const { Connection, Request, TYPES } = require('tedious');
 const config = require('../config');
 const cronjob = require('../cronjob/cron-article')
@@ -7,6 +7,7 @@ var count = 0
 // Definerer articleDownload funktion
 function ArticleDownload(obj) {
     const connection = new Connection(config);
+    
     // Return et promise
     return new Promise((resolve, reject) => {
         // Laver database connection
