@@ -1,5 +1,8 @@
+//Henter dotenv modulet
 require('dotenv').config();
 
+//Definerer et objekt som bruges til konfiguration af forbindelse til Azure
+//Vi bruger dotenv, så man selv kan oprette en .env-fil og udfylde ens egen konfigurationsværdier
 const config = {
     server: process.env.DATABASE_URL,
     authentication: {
@@ -16,4 +19,5 @@ const config = {
     }
 };
 
+//Eksporterer config-objektet til vores Models
 module.exports = config;
